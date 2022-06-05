@@ -5,6 +5,7 @@ import argparse
 from typing import List
 from to_do_app.main import * # pylint: disable=wildcard-import
 from to_do_app import __version__
+__author__ = "Marcus Bakke"
 
 _logger = logging.getLogger(__name__)
 
