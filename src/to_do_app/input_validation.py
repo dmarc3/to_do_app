@@ -11,7 +11,7 @@ _validator = Dict(
         task_start_date = Datetime(format='%Y-%m-%d'),
         task_due_date = Datetime(format='%Y-%m-%d'),
         task_status = Str(options=['ACTIVE', 'NOT STARTED', 'COMPLETED', 'DELETED']),
-        task_priority = Int(min=1, max=10),
+        task_priority = Str(options=[str(x) for x in range(1, 11)]),
     ),
     optional=['task_name', 'task_description', 'task_start_date',
               'task_due_date', 'task_status', 'task_priority']
@@ -29,8 +29,8 @@ def validate_input(inp: dict) -> bool:
         bool: Boolean describing validity of input.
     """
     try:
-        if _validator(inp):
-            return True
+        _validator(inp)
+        return True
     except exc.ValidationError as error:
         # Log useful error message
         for suberror in error:
@@ -39,4 +39,5 @@ def validate_input(inp: dict) -> bool:
             formatted_error[0] = formatted_error[0].replace('_', ' ').upper() + \
                                  ': "' + inp[key] + '"'
             _logger.error(' -> '.join(formatted_error))
+        _logger.error('Validation failed.')
         return False
