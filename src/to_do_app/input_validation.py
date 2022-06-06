@@ -10,7 +10,7 @@ _validator = Dict(
         task_description = Str(minlen=10, maxlen=500),
         task_start_date = Datetime(format='%Y-%m-%d'),
         task_due_date = Datetime(format='%Y-%m-%d'),
-        task_status = Str(options=['ACTIVE', 'NOT STARTED', 'COMPLETED', 'DELETED']),
+        task_status = Str(options=['ACTIVE', 'LATE', 'COMPLETED', 'DELETED']),
         task_priority = Str(options=[str(x) for x in range(1, 11)]),
     ),
     optional=['task_name', 'task_description', 'task_start_date',

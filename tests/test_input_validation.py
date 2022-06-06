@@ -44,7 +44,7 @@ def test_validate_task_status():
     """task_status validation tests"""
     # Test valid task_status
     assert validate_input(dict(task_status='ACTIVE'))
-    assert validate_input(dict(task_status='NOT STARTED'))
+    assert validate_input(dict(task_status='LATE'))
     assert validate_input(dict(task_status='COMPLETED'))
     assert validate_input(dict(task_status='DELETED'))
     # Test invalid task_status
