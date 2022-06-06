@@ -1,33 +1,22 @@
 from sqlalchemy import create_engine
-from sqlalchemy import Table, Column, Integer, String, Date, MetaData
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import MetaData
+from sqlalchemy import Integer, String, Date, Column, Table
 
-meta = MetaData()
-engine = create_engine('sqlite:///task.db')
-Base = declarative_base()
-meta.create_all(engine)
-conn = engine.connect()
 
-task = Table(
-   'tasks', meta,
+metadata_object = MetaData()
+
+task_detail = Table(
+   'task_table',
+   metadata_object,
    Column('task_id', Integer, primary_key=True),
-   Column('task', String),
-   Column('task_description', String),
+   Column('task', String(50)),
+   Column('task_description', String(150)),
    Column('start_date', Date),
    Column('due_date', Date)
 )
 
-meta.create_all(engine)
+# creating an engine object
+engine = create_engine('sqlite:///task.db', echo=True, future=True)
 
-conn = engine.connect()
-# ins = task.insert().values(task_id=1,
-#                            task='Complete Homework',
-#                            task_description='for Python class',
-#                            start_date=datetime(2023,1,1),
-#                            due_date=datetime(2023,6,1))
-# result = conn.execute(ins)
-# s = task.select()
-# result = conn.execute(s)
-# row = result.fetchone()
-# for x in row:
-#    print(x)
+# emitting DDL
+metadata_object.create_all(engine)
