@@ -12,8 +12,8 @@ class TaskCollection:
         self.database = model.task_detail
 
     def add_task(self, new_task, task_description, start_date, due_date):
-        select_max = select(max([self.database.c.task_id]) + 1)
-        new_id = conn.execute(select_max)
+        select_max = conn.execute(select(max([self.database.c.task_id])))
+        new_id = select_max.fetchone()
         ins = insert(self.database).values(task_id=new_id,
                                      task=new_task,
                                      task_description=task_description,
