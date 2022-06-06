@@ -25,6 +25,7 @@ class TaskCollection:
                                      start_date=start_date,
                                      due_date=due_date)
         conn.execute(ins)
+        conn.commit()
 
     def print_task(self):
         try:
