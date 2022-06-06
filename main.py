@@ -6,28 +6,50 @@ from sqlalchemy.orm import session
 from datetime import datetime
 from sqlalchemy import select
 
-# while True:
-#     print(
-#         'A: Add task'
-#     )
+import validation
+
+while True:
+    print(
+        """
+        A: Add task
+        B: Print tasks
+        """
+    )
+    option = input('Select one of the above options: ')
+    option = option.lower().strip()
+    task_collection = task.TaskCollection()
+
+    if option == 'a':
+        task = input('What task would you like to add? ')
+        task_description = input('Provide a brief description to the task: ')
+        start_month = validation.month_response('start')
+        start_date = validation.day_response('start')
+        start_year = validation.year_response('start')
+        due_month = validation.month_response('due')
+        due_date = validation.day_response('due')
+        due_year = validation.year_response('due')
+        task_collection.add_task(task,
+                                 task_description,
+                                 datetime(start_year, start_month, start_date),
+                                 datetime(due_year, due_month, due_date))
 
 
+# task_collection = task.TaskCollection()
+#
+# try:
+#     max_id = select(max([task_collection.database.c.task_id]) + 1)
+# except:
+#     max_id = 1
+#
+# task_collection.add_task(1, 'complete homework', 'for python class',datetime(2023,1,1), datetime(2023,6,1))
 
-task_collection = task.TaskCollection()
+# ins = task_collection.database.insert().values(task_id=1,
+#                            task='Complete Homework',
+#                            task_description='for Python class',
+#                            start_date=datetime(2023,1,1),
+#                            due_date=datetime(2023,6,1))
 
-try:
-    max_id = select(max([task_collection.database.c.task_id]) + 1)
-except:
-    max_id = 1
 
-ins = task_collection.database.insert().values(max_id=1,
-                           task='Complete Homework',
-                           task_description='for Python class',
-                           start_date=datetime(2023,1,1),
-                           due_date=datetime(2023,6,1))
-
-for task in session.query(task_collection.database):
-    print(task)
 # # session.query(func.max(task_collection.task_id))
 # # new_task = input('What task do you want to add? ')
 # # task_description = input('Provide a brief description to the task ')
