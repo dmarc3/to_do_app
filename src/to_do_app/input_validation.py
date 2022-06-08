@@ -1,7 +1,8 @@
 """ Input validation methods """
 import logging
-from validx import Dict, Str, Int, Datetime, exc
+from validx import Dict, Str, Datetime, exc
 
+__author__ = "Marcus Bakke"
 _logger = logging.getLogger(__name__)
 
 _validator = Dict(
@@ -19,17 +20,17 @@ _validator = Dict(
 
 _formatter = exc.format_error
 
-def validate_input(inp: dict) -> bool:
+def validate_input(inputs: dict) -> bool:
     """Validates input
 
     Args:
-        inp (dict): Dictionary containing inputs to be validated.
+        inputs (dict): Dictionary containing inputs to be validated.
 
     Returns:
         bool: Boolean describing validity of input.
     """
     try:
-        _validator(inp)
+        _validator(inputs)
         return True
     except exc.ValidationError as error:
         # Log useful error message
@@ -37,7 +38,7 @@ def validate_input(inp: dict) -> bool:
             key = suberror.context[0]
             formatted_error = list(_formatter(suberror)[0])
             formatted_error[0] = formatted_error[0].replace('_', ' ').upper() + \
-                                 ': "' + inp[key] + '"'
+                                 ': "' + inputs[key] + '"'
             _logger.error(' -> '.join(formatted_error))
         _logger.error('Validation failed.')
         return False

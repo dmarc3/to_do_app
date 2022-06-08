@@ -1,25 +1,38 @@
 """ Command line interface for to_do_app """
 import sys
+from datetime import datetime
 import logging
 import argparse
 from typing import List
 from to_do_app.main import * # pylint: disable=wildcard-import
 from to_do_app import __version__
+
 __author__ = "Marcus Bakke"
 
+# Define root logger settings
+logformat = "[%(asctime)s] %(levelname)s:%(name)s:%(message)s"
+log_file = f'log_{datetime.today():%d-%m-%Y}.log'
+logging.basicConfig(
+    filename=log_file,
+    level=logging.INFO,
+    format=logformat,
+    datefmt="%Y-%m-%d %H:%M:%S",
+)
+console = logging.StreamHandler(sys.stdout)
+root_logger = logging.getLogger()
+root_logger.addHandler(console)
+
+# Define module logger -> inherits from root logger
 _logger = logging.getLogger(__name__)
 
-
-def setup_logging(loglevel: int):
+def update_log_level(loglevel: int):
     """Setup basic logging
 
     Args:
       loglevel (int): minimum loglevel for emitting messages
     """
-    logformat = "[%(asctime)s] %(levelname)s:%(name)s:%(message)s"
-    logging.basicConfig(
-        level=loglevel, stream=sys.stdout, format=logformat, datefmt="%Y-%m-%d %H:%M:%S"
-    )
+    logger = logging.getLogger()
+    logger.setLevel(loglevel)
 
 
 def parse_args(args: List[str]) -> argparse.Namespace:
@@ -47,17 +60,10 @@ def parse_args(args: List[str]) -> argparse.Namespace:
         "-v",
         "--verbose",
         dest="loglevel",
-        help="set loglevel to INFO",
-        action="store_const",
-        const=logging.INFO,
-    )
-    parser.add_argument(
-        "-vv",
-        "--very-verbose",
-        dest="loglevel",
         help="set loglevel to DEBUG",
         action="store_const",
         const=logging.DEBUG,
+        default=logging.INFO,
     )
     # Add custom commands
     act = 'store_true'
@@ -87,7 +93,7 @@ def main(args: List[str]):
     """
     args = parse_args(args)
     # Set verbosity level
-    setup_logging(args.loglevel)
+    update_log_level(args.loglevel)
     # Process arguments
     funcs = [add_task, list_tasks, set_start_date,
             set_due_date, mark_complete, delete_task,
