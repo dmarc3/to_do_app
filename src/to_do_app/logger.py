@@ -3,6 +3,8 @@ import sys
 from datetime import datetime
 import logging
 
+__author__ = "Marcus Bakke"
+
 # Define root logger settings
 LOG_FORMAT = "[%(asctime)s] %(levelname)s:%(name)s:%(message)s"
 LOG_FILE = f'log_{datetime.today():%d-%m-%Y}.log'

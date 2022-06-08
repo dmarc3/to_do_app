@@ -17,7 +17,6 @@ _validator = Dict(
     optional=['task_name', 'task_description', 'task_start_date',
               'task_due_date', 'task_status', 'task_priority']
 )
-
 _formatter = exc.format_error
 
 def validate_input(inputs: dict) -> bool:
