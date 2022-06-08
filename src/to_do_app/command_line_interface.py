@@ -1,32 +1,17 @@
 """ Command line interface for to_do_app """
 import sys
-from datetime import datetime
 import logging
 import argparse
 from typing import List
+import to_do_app.logger # pylint: disable=unused-import
 from to_do_app.main import * # pylint: disable=wildcard-import
 from to_do_app import __version__
 
 __author__ = "Marcus Bakke"
-
-# Define root logger settings
-logformat = "[%(asctime)s] %(levelname)s:%(name)s:%(message)s"
-log_file = f'log_{datetime.today():%d-%m-%Y}.log'
-logging.basicConfig(
-    filename=log_file,
-    level=logging.INFO,
-    format=logformat,
-    datefmt="%Y-%m-%d %H:%M:%S",
-)
-console = logging.StreamHandler(sys.stdout)
-root_logger = logging.getLogger()
-root_logger.addHandler(console)
-
-# Define module logger -> inherits from root logger
 _logger = logging.getLogger(__name__)
 
 def update_log_level(loglevel: int):
-    """Setup basic logging
+    """Updates root logger log level per verbosity argument
 
     Args:
       loglevel (int): minimum loglevel for emitting messages
