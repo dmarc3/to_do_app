@@ -1,22 +1,14 @@
-from sqlalchemy import create_engine
-from sqlalchemy import MetaData
-from sqlalchemy import Integer, String, Date, Column, Table
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import Integer, String, Date, Column
 
 
-metadata_object = MetaData()
+Base = declarative_base()
 
-task_detail = Table(
-   'task_table',
-   metadata_object,
-   Column('task_id', Integer, primary_key=True),
-   Column('task', String(50)),
-   Column('task_description', String(150)),
-   Column('start_date', Date),
-   Column('due_date', Date)
-)
 
-# creating an engine object
-engine = create_engine('sqlite:///task.db', echo=True, future=True)
-
-# emitting DDL
-metadata_object.create_all(engine)
+class Task(Base):
+    __tablename__ = 'task_detail'
+    task_id = Column(Integer, primary_key=True)
+    task = Column(String(50))
+    task_description = Column(String(100))
+    start_date = Column(Date)
+    due_date = Column(Date)

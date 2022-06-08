@@ -1,12 +1,15 @@
-# import model
-# import task
-# from datetime import datetime
-# from sqlalchemy import func
-# from sqlalchemy.orm import session
-# from datetime import datetime
-# from sqlalchemy import select
+from sqlalchemy import create_engine
+from sqlalchemy.orm import Session
+import validation
+import model
+import task
 
-# import validation
+engine = create_engine('sqlite:///task.db', echo=True, future=True)
+model.task_detail.metadata.bind = engine
+model.task_detail.metadata.create_all()
+
+task_collection = task.TaskCollection()
+task_collection.add_task('test', 'for python 320')
 
 # while True:
 #     print(
@@ -18,25 +21,16 @@
 #     )
 #     option = input('Select one of the above options: ')
 #     option = option.lower().strip()
-#     task_collection = task.TaskCollection()
+#     task_collection = task.TaskCollection(engine)
+#
+#     with Session(engine) as session:
+#         if option == 'a':
+#             task = input('What task would you like to add? ')
+#             task_description = input('Provide a brief description to the task: ')
+#             task_collection.add_task(task,
+#                                      task_description)
+#
+#         elif option == 'b':
+#             task.TaskCollection.print_task(task_collection)
 
-#     if option == 'a':
-#         new_task = input('What task would you like to add? ')
-#         task_description = input('Provide a brief description to the task: ')
-#         # start_month = validation.month_response('start')
-#         # start_date = validation.day_response('start')
-#         # start_year = validation.year_response('start')
-#         # due_month = validation.month_response('finish')
-#         # due_date = validation.day_response('finish')
-#         # due_year = validation.year_response('finish')
-#         task_collection.add_task(new_task,
-#                                  task_description,
-#                                  # datetime(start_year, start_month, start_date),
-#                                  # datetime(due_year, due_month, due_date)
-#         )
-
-#     elif option == 'b':
-#         task.TaskCollection.print_task(task_collection)
-
-#     elif option == 'c':
 
