@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from sqlalchemy import func, insert, update
+from sqlalchemy import func, insert, update, select
 from datetime import datetime
 import model
 import validation
@@ -33,7 +33,12 @@ class TaskCollection:
         print('The following tasks are included:')
         if len(search_tasks) > 0:
             for x in search_tasks:
-                print(x.task_id, x.task, x.task_description, x.start_date, x.due_date)
+                print('task_id:', x.task_id,
+                      'task:', x.task,
+                      'task_description:', x.task_description,
+                      'start_date:', x.start_date,
+                      'due_date:', x.due_date,
+                      'status:', x.status)
         else:
             print('None')
         session.close()
@@ -45,7 +50,8 @@ class TaskCollection:
         while True:
             select_query = session.query(model.Task).filter_by(task_id=task_id)
             select_results = session.execute(select_query)
-            task_id = select_results.fetchone()
+            select_result = select_results.first()[0]
+            task_id = select_result.task_id
             if task_id is None:
                 print(f'task id {task_id} does not exist! Try again.')
                 task_id = validation.task_id_response(column_name)
@@ -54,9 +60,8 @@ class TaskCollection:
         month_date = validation.month_response(column_name)
         date_date = validation.day_response(column_name)
         year_date = validation.year_response(column_name)
-        update_query = session.query(model.Task).update()
-        u = update(model.Task.values({model.Task.start_date: datetime(year_date, month_date, date_date)}))
-        session.execute(u)
+        session.query(model.Task).filter(model.Task.task_id == task_id).update({column_name:
+                                                                        datetime(year_date, month_date, date_date)})
         session.commit()
         session.close()
 
@@ -65,15 +70,15 @@ class TaskCollection:
         TaskCollection.print_tasks(self)
         task_id = validation.task_id_response('status')
         while True:
-            select_query = model.Task.select().where(model.task_detail.c.task_id == task_id)
+            select_query = session.query(model.Task).filter_by(task_id=task_id)
             select_results = session.execute(select_query)
-            task_id = select_results.fetchone()
+            select_result = select_results.first()[0]
+            task_id = select_result.task_id
             if task_id is None:
                 print(f'task id {task_id} does not exist! Try again.')
                 task_id = validation.task_id_response('status')
             else:
                 break
-        u = update(model.task_detail).values({model.task_detail.c.status: 'Completed'})
-        session.execute(u)
+        session.query(model.Task).filter(model.Task.task_id == task_id).update({'status': 'Completed'})
         session.commit()
         session.close()
