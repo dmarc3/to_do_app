@@ -58,3 +58,14 @@ def task_id_response(column_name):
         except ValueError:
             task_id = input('Please provide the task id in numeric form! Please provide again ')
 
+
+def priority_response(task):
+    priority = input(f'How would you like to set the priority for task_id {task}? Please choose between 1-10: ')
+    while True:
+        try:
+            priority = priority.strip().lower()
+            priority = int(priority)
+            1 <= priority <= 10
+            return priority
+        except ValueError:
+            priority = input('Please provide the priority in numeric form! Please provide again ')

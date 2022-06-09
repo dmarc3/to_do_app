@@ -13,3 +13,4 @@ class Task(Base):
     start_date = Column(Date)
     due_date = Column(Date)
     status = Column(String(50))
+    priority = Column(Integer)
