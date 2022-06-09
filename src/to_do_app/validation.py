@@ -1,9 +1,10 @@
-from datetime import datetime, date
+from datetime import date
+
 today_year = date.today().year
 
 
-def month_response(type):
-    month = input(f'What month would you like to {type} on this task?'
+def month_response(date_type):
+    month = input(f'What month would you like to {date_type} on this task?'
                   f' Please provide the month in numeric form ')
     while True:
         try:
@@ -17,8 +18,8 @@ def month_response(type):
             month = input('Please provide the month in numeric form! Please provide again ')
 
 
-def day_response(type):
-    day = input(f'What day would you like to {type} on this task?'
+def day_response(date_type):
+    day = input(f'What day would you like to {date_type} on this task?'
                   f' Please provide the month in numeric form ')
     while True:
         try:
@@ -32,8 +33,8 @@ def day_response(type):
             day = input('Please provide the day in numeric form! Please provide again ')
 
 
-def year_response(type):
-    year = input(f'What year would you like to {type} on this task?'
+def year_response(date_type):
+    year = input(f'What year would you like to {date_type} on this task?'
                   f' Please provide the year in numeric form ')
     while True:
         try:
@@ -45,3 +46,15 @@ def year_response(type):
                 year = input('The year has passed! Try again ')
         except ValueError:
             year = input('Please provide the year in numeric form! Please provide again ')
+
+
+def task_id_response(column_name):
+    task_id = input(f'Which task would you want to update the {column_name} for?')
+    while True:
+        try:
+            task_id = task_id.strip().lower()
+            task_id = int(task_id)
+            return task_id
+        except ValueError:
+            task_id = input('Please provide the task id in numeric form! Please provide again ')
+
