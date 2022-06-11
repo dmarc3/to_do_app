@@ -47,14 +47,16 @@ while True:
         task.TaskCollection.set_date(task_collection, 'start_date')
 
     elif option == 'h':
+        task.TaskCollection.print_tasks(task_collection, 'task_id')
         task.TaskCollection.set_date(task_collection, 'due_date')
 
     elif option == 'i':
-        task.TaskCollection.update_status(task_collection)
+        task.TaskCollection.print_tasks(task_collection, 'task_id')
+        task.TaskCollection.update_status(task_collection, 'Completed')
 
     elif option == 'j':
         task.TaskCollection.print_tasks(task_collection, 'task_id')
-        task.TaskCollection.delete_status(task_collection)
+        task.TaskCollection.update_status(task_collection, 'Deleted')
 
     elif option == 'k':
         task.TaskCollection.print_tasks(task_collection, 'task_id')

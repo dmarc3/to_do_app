@@ -81,7 +81,7 @@ class TaskCollection:
                 print('This is not a legitimate task id! Try again.')
                 update_id = validation.task_id_response(column_name)
 
-    def update_status(self):
+    def update_status(self, new_status):
         update_id = validation.task_id_response('update', 'status')
         while True:
             query = self.db.execute(text(f"""SELECT* FROM tasks t WHERE t.task_id={update_id}"""))
@@ -89,7 +89,7 @@ class TaskCollection:
             try:
                 if len(query_results) > 0:
                     self.db.execute(text(f"""UPDATE tasks
-                                             SET status=1
+                                             SET status='{new_status}'
                                              WHERE task_id={update_id}"""))
                     self.db.commit()
                     break
@@ -97,20 +97,6 @@ class TaskCollection:
                 print('This is not a legitimate task id! Try again.')
                 update_id = validation.task_id_response('status')
 
-    def delete_status(self):
-        update_id = validation.task_id_response('delete', 'status')
-        while True:
-            query = self.db.execute(text(f"""SELECT* FROM tasks t WHERE t.task_id={update_id}"""))
-            query_results = query.fetchone()
-            try:
-                if len(query_results) > 0:
-                    self.db.execute(text(f"""DELETE FROM tasks
-                                             WHERE task_id={update_id}"""))
-                    self.db.commit()
-                    break
-            except TypeError:
-                print('This is not a legitimate task id! Try again.')
-                update_id = validation.task_id_response('status')
 
     def update_data(self, column_name):
         update_id = validation.task_id_response('set', column_name)
