@@ -25,7 +25,7 @@ class TaskCollection:
             max_query = self.db.execute(text("""SELECT
                                             task_id
                                             FROM tasks
-                                            ORDER BY task_id
+                                            ORDER BY task_id DESC
                                             LIMIT 1"""))
             max_result = max_query.fetchone()
             max_id = max_result[0] + 1
@@ -96,7 +96,6 @@ class TaskCollection:
             except TypeError:
                 print('This is not a legitimate task id! Try again.')
                 update_id = validation.task_id_response('status')
-
 
     def update_data(self, column_name):
         update_id = validation.task_id_response('set', column_name)
