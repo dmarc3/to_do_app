@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, datetime
 
 today_year = date.today().year
 
@@ -48,8 +48,22 @@ def year_response(date_type):
             year = input('Please provide the year in numeric form! Please provide again ')
 
 
-def task_id_response(column_name):
-    task_id = input(f'Which task would you want to update the {column_name} for?')
+def date_response(date_type):
+    year = year_response(date_type)
+    month = month_response(date_type)
+    day = day_response(date_type)
+    while True:
+        try:
+            return datetime(year, month, day)
+        except ValueError:
+            print('That was not a real date. Please try again!')
+            year = year_response(date_type)
+            month = month_response(date_type)
+            day = day_response(date_type)
+
+
+def task_id_response(action, column_name):
+    task_id = input(f'Which task would you want to {action} the {column_name} for?')
     while True:
         try:
             task_id = task_id.strip().lower()
