@@ -1,26 +1,35 @@
+import logging
+from datetime import datetime, timedelta
 from sqlalchemy import create_engine, text, exc
-import validation
+# import to_do_app.validation as validation
 
+__author__ = 'Kathleen Wong'
+_logger = logging.getLogger(__name__)
 
 class TaskCollection:
+    """ Class to interact with SQL database """
+
     def __init__(self):
+        """ Initialize TaskCollection """
         self.engine = create_engine('sqlite:///task.db', future=True)
         self.db = self.engine.connect()
+        _logger.debug('Connection to sqlite:///task.db established.')
         try:
             self.db.execute(text('SELECT * FROM tasks'))
         except exc.OperationalError:
+            _logger.debug('Database empty. Initializing database.')
             self.db.execute(text(
                 """CREATE TABLE tasks(
                    task_id INTEGER NOT NULL,
-                   task VARCHAR,
-                   task_description VARCHAR,
+                   name VARCHAR,
+                   description VARCHAR,
                    start_date date,
                    due_date date,
                    status VARCHAR,
                    priority VARCHAR,
                    PRIMARY KEY (task_id))"""))
 
-    def add_task(self, task, task_description):
+    def add_task(self, name, description, priority):
         try:
             max_query = self.db.execute(text("""SELECT
                                             task_id
@@ -32,8 +41,13 @@ class TaskCollection:
         except TypeError:
             max_id = 1
         finally:
-            self.db.execute(text(f"""INSERT INTO tasks(task_id, task, task_description) VALUES({max_id}, '{task}', 
-            '{task_description}')"""))
+            self.db.execute(text(f"""INSERT INTO tasks(task_id, name,
+                                  description, start_date, due_date, status,
+                                  priority) VALUES({max_id}, "{name}",
+                                  "{description}",
+                                  '{datetime.today().strftime('%Y-%m-%d')}',
+                                  '{(datetime.today()+timedelta(weeks=1)).strftime('%Y-%m-%d')}',
+                                   'ACTIVE', '{priority}')"""))
             self.db.commit()
 
     def print_tasks(self, column_name):
@@ -46,10 +60,10 @@ class TaskCollection:
                                              WHERE t.status=1
                                              AND t.{date_type} BETWEEN '{first_date}' AND '{second_date}'"""))
         elif column_name == 'overdue':
-            query = self.db.execute(text(f"""SELECT*
-                                             FROM tasks t
-                                             WHERE t.status=0
-                                             AND t.due_date<DATE()"""))
+            query = self.db.execute(text("""SELECT*
+                                            FROM tasks t
+                                            WHERE t.status=0
+                                            AND t.due_date<DATE()"""))
         else:
             query = self.db.execute(text(f"""SELECT*
                                             FROM tasks t
@@ -59,65 +73,37 @@ class TaskCollection:
         try:
             for query_row in query_results:
                 print('task_id:', query_row.task_id, 'task:', query_row.task, 'task description:',
-                      query_row.task_description, 'start date:', query_row.start_date, 'due date:',
+                      query_row.description, 'start date:', query_row.start_date, 'due date:',
                       query_row.due_date, 'status:', query_row.status, 'priority:', query_row.priority)
         except TypeError:
             print('None')
 
-    def set_date(self, column_name):
-        update_id = validation.task_id_response('set', column_name)
-        while True:
-            query = self.db.execute(text(f"""SELECT* FROM tasks t WHERE t.task_id={update_id}"""))
-            query_results = query.fetchone()
-            try:
-                if len(query_results) > 0:
-                    new_date = validation.date_response(column_name)
-                    self.db.execute(text(f"""UPDATE tasks
-                                             SET {column_name}='{new_date}'
-                                             WHERE task_id={update_id}"""))
-                    self.db.commit()
-                    break
-            except TypeError:
-                print('This is not a legitimate task id! Try again.')
-                update_id = validation.task_id_response(column_name)
+    def set_date(self, task_id, start_date=None, due_date=None):
+        if start_date:
+            self.db.execute(text(f"""UPDATE tasks
+                                     SET start_date='{start_date}'
+                                     WHERE task_id={task_id}"""))
+            self.db.commit()
+        if due_date:
+            self.db.execute(text(f"""UPDATE tasks
+                                     SET due_date='{due_date}'
+                                     WHERE task_id={task_id}"""))
+            self.db.commit()
 
-    def update_status(self, new_status):
-        update_id = validation.task_id_response('update', 'status')
-        while True:
-            query = self.db.execute(text(f"""SELECT* FROM tasks t WHERE t.task_id={update_id}"""))
-            query_results = query.fetchone()
-            try:
-                if len(query_results) > 0:
-                    self.db.execute(text(f"""UPDATE tasks
-                                             SET status='{new_status}'
-                                             WHERE task_id={update_id}"""))
-                    self.db.commit()
-                    break
-            except TypeError:
-                print('This is not a legitimate task id! Try again.')
-                update_id = validation.task_id_response('status')
+    def update(self, task_id, name=None, description=None, status=None):
+        if name:
+            self.db.execute(text(f"""UPDATE tasks
+                                     SET name='{name}'
+                                     WHERE task_id={task_id}"""))
+            self.db.commit()
+        if description:
+            self.db.execute(text(f"""UPDATE tasks
+                                     SET description='{description}'
+                                     WHERE task_id={task_id}"""))
+            self.db.commit()
+        if status:
+            self.db.execute(text(f"""UPDATE tasks
+                                     SET status='{status}'
+                                     WHERE task_id={task_id}"""))
+            self.db.commit()
 
-    def update_data(self, column_name):
-        update_id = validation.task_id_response('set', column_name)
-        while True:
-            query = self.db.execute(text(f"""SELECT* FROM tasks t WHERE t.task_id={update_id}"""))
-            query_results = query.fetchone()
-            try:
-                if len(query_results) > 0:
-                    if column_name == 'priority':
-                        new_answer = validation.priority_response(update_id)
-                        self.db.execute(text(f"""UPDATE tasks
-                                                 SET {column_name}='{new_answer}'
-                                                 WHERE task_id={update_id}"""))
-                        self.db.commit()
-                        break
-                    else:
-                        new_answer = input(f'What would you like to update the {column_name} to?')
-                        self.db.execute(text(f"""UPDATE tasks
-                                                 SET {column_name}='{new_answer}'
-                                                 WHERE task_id={update_id}"""))
-                        self.db.commit()
-                        break
-            except TypeError:
-                print('This is not a legitimate task id! Try again.')
-                update_id = validation.task_id_response(column_name)
