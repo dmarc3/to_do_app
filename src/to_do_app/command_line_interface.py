@@ -5,6 +5,7 @@ import argparse
 from typing import List
 import to_do_app.logger # pylint: disable=unused-import
 from to_do_app.main import * # pylint: disable=wildcard-import
+from to_do_app.task import TaskCollection
 from to_do_app import __version__
 
 __author__ = "Marcus Bakke"
@@ -79,6 +80,10 @@ def main(args: List[str]):
     args = parse_args(args)
     # Set verbosity level
     update_log_level(args.loglevel)
+    _logger.debug('Executing todo with the following arguments: %s',
+                  ', '.join(['--'+arg for arg in vars(args) if getattr(args, arg) == True]))
+    # Initialize Tasks class
+    tasks = TaskCollection()
     # Process arguments
     funcs = [add_task, list_tasks, set_start_date,
             set_due_date, mark_complete, delete_task,
@@ -86,7 +91,7 @@ def main(args: List[str]):
     for func in funcs:
         if getattr(args, func.__name__):
             _logger.info("Executing %s: %s...", func.__name__, func.__doc__)
-            if func():
+            if func(tasks):
                 _logger.info("%s completed successfully.", func.__name__)
             else:
                 _logger.error("%s completed unsuccessfully.", func.__name__)

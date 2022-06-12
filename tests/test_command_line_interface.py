@@ -1,140 +1,149 @@
-""" Unittests for command line interface """
+""" Unittests for command line interface. Test arguments. """
+from unittest.mock import Mock, patch
 from to_do_app.command_line_interface import main
 __author__ = "Marcus Bakke"
 
 
-def test_cli_add_task(mocker):
+def test_cli_add_task():
     """CLI add_task tests"""
-    func = mocker.patch('to_do_app.command_line_interface.getattr')
-    func.return_value = True
+    getattr_mock = Mock()
+    getattr_mock.return_value = False
     for arg in ['-a', '--add_task']:
-        main([arg])
-        func.assert_called()
-        args = func.call_args_list[0][0][0]
-        assert args.add_task
-        assert not args.list_tasks
-        assert not args.set_start_date
-        assert not args.set_due_date
-        assert not args.mark_complete
-        assert not args.delete_task
-        assert not args.change_task_name
-        assert not args.change_task_description
+        with patch('to_do_app.command_line_interface.getattr', getattr_mock) as mock:
+            main([arg])
+            mock.assert_called()
+            args = mock.call_args_list[0][0][0]
+            assert args.add_task
+            assert not args.list_tasks
+            assert not args.set_start_date
+            assert not args.set_due_date
+            assert not args.mark_complete
+            assert not args.delete_task
+            assert not args.change_task_name
+            assert not args.change_task_description
 
-def test_cli_list_tasks(mocker):
+def test_cli_list_tasks():
     """CLI list_tasks tests"""
-    func = mocker.patch('to_do_app.command_line_interface.getattr')
-    func.return_value = True
+    getattr_mock = Mock()
+    getattr_mock.return_value = False
     for arg in ['-l', '--list_tasks']:
-        main([arg])
-        func.assert_called()
-        args = func.call_args_list[1][0][0]
-        assert not args.add_task
-        assert args.list_tasks
-        assert not args.set_start_date
-        assert not args.set_due_date
-        assert not args.mark_complete
-        assert not args.delete_task
-        assert not args.change_task_name
-        assert not args.change_task_description
+        with patch('to_do_app.command_line_interface.getattr', getattr_mock) as mock:
+            main([arg])
+            mock.assert_called()
+            args = mock.call_args_list[1][0][0]
+            assert not args.add_task
+            assert args.list_tasks
+            assert not args.set_start_date
+            assert not args.set_due_date
+            assert not args.mark_complete
+            assert not args.delete_task
+            assert not args.change_task_name
+            assert not args.change_task_description
 
-def test_cli_set_start_date(mocker):
+def test_cli_set_start_date():
     """CLI set_start_date tests"""
-    func = mocker.patch('to_do_app.command_line_interface.getattr')
-    func.return_value = True
+    getattr_mock = Mock()
+    getattr_mock.return_value = False
     for arg in ['-ssd', '--set_start_date']:
-        main([arg])
-        func.assert_called()
-        args = func.call_args_list[2][0][0]
-        assert not args.add_task
-        assert not args.list_tasks
-        assert args.set_start_date
-        assert not args.set_due_date
-        assert not args.mark_complete
-        assert not args.delete_task
-        assert not args.change_task_name
-        assert not args.change_task_description
+        with patch('to_do_app.command_line_interface.getattr', getattr_mock) as mock:
+            main([arg])
+            mock.assert_called()
+            args = mock.call_args_list[2][0][0]
+            assert not args.add_task
+            assert not args.list_tasks
+            assert args.set_start_date
+            assert not args.set_due_date
+            assert not args.mark_complete
+            assert not args.delete_task
+            assert not args.change_task_name
+            assert not args.change_task_description
 
-def test_cli_set_due_date(mocker):
+def test_cli_set_due_date():
     """CLI set_due_date tests"""
-    func = mocker.patch('to_do_app.command_line_interface.getattr')
-    func.return_value = True
+    getattr_mock = Mock()
+    getattr_mock.return_value = False
     for arg in ['-sdd', '--set_due_date']:
-        main([arg])
-        func.assert_called()
-        args = func.call_args_list[3][0][0]
-        assert not args.add_task
-        assert not args.list_tasks
-        assert not args.set_start_date
-        assert args.set_due_date
-        assert not args.mark_complete
-        assert not args.delete_task
-        assert not args.change_task_name
-        assert not args.change_task_description
+        with patch('to_do_app.command_line_interface.getattr', getattr_mock) as mock:
+            main([arg])
+            mock.assert_called()
+            args = mock.call_args_list[3][0][0]
+            assert not args.add_task
+            assert not args.list_tasks
+            assert not args.set_start_date
+            assert args.set_due_date
+            assert not args.mark_complete
+            assert not args.delete_task
+            assert not args.change_task_name
+            assert not args.change_task_description
 
-def test_cli_mark_complete(mocker):
+def test_cli_mark_complete():
     """CLI mark_complete tests"""
-    func = mocker.patch('to_do_app.command_line_interface.getattr')
-    func.return_value = True
+    getattr_mock = Mock()
+    getattr_mock.return_value = False
     for arg in ['-m', '--mark_complete']:
-        main([arg])
-        func.assert_called()
-        args = func.call_args_list[4][0][0]
-        assert not args.add_task
-        assert not args.list_tasks
-        assert not args.set_start_date
-        assert not args.set_due_date
-        assert args.mark_complete
-        assert not args.delete_task
-        assert not args.change_task_name
-        assert not args.change_task_description
+        with patch('to_do_app.command_line_interface.getattr', getattr_mock) as mock:
+            main([arg])
+            mock.assert_called()
+            args = mock.call_args_list[4][0][0]
+            assert not args.add_task
+            assert not args.list_tasks
+            assert not args.set_start_date
+            assert not args.set_due_date
+            assert args.mark_complete
+            assert not args.delete_task
+            assert not args.change_task_name
+            assert not args.change_task_description
 
-def test_cli_delete_task(mocker):
+def test_cli_delete_task():
     """CLI delete_task tests"""
-    func = mocker.patch('to_do_app.command_line_interface.getattr')
-    func.return_value = True
+    getattr_mock = Mock()
+    getattr_mock.return_value = False
     for arg in ['-d', '--delete_task']:
-        main([arg])
-        func.assert_called()
-        args = func.call_args_list[5][0][0]
-        assert not args.add_task
-        assert not args.list_tasks
-        assert not args.set_start_date
-        assert not args.set_due_date
-        assert not args.mark_complete
-        assert args.delete_task
-        assert not args.change_task_name
-        assert not args.change_task_description
+        with patch('to_do_app.command_line_interface.getattr', getattr_mock) as mock:
+            main([arg])
+            mock.assert_called()
+            args = mock.call_args_list[5][0][0]
+            assert not args.add_task
+            assert not args.list_tasks
+            assert not args.set_start_date
+            assert not args.set_due_date
+            assert not args.mark_complete
+            assert args.delete_task
+            assert not args.change_task_name
+            assert not args.change_task_description
 
-def test_cli_change_task_name(mocker):
+def test_cli_change_task_name():
     """CLI change_task_name tests"""
-    func = mocker.patch('to_do_app.command_line_interface.getattr')
-    func.return_value = True
+    getattr_mock = Mock()
+    getattr_mock.return_value = False
     for arg in ['-cn', '--change_task_name']:
-        main([arg])
-        func.assert_called()
-        args = func.call_args_list[6][0][0]
-        assert not args.add_task
-        assert not args.list_tasks
-        assert not args.set_start_date
-        assert not args.set_due_date
-        assert not args.mark_complete
-        assert not args.delete_task
-        assert args.change_task_name
-        assert not args.change_task_description
+        with patch('to_do_app.command_line_interface.getattr', getattr_mock) as mock:
+            main([arg])
+            mock.assert_called()
+            args = mock.call_args_list[6][0][0]
+            assert not args.add_task
+            assert not args.list_tasks
+            assert not args.set_start_date
+            assert not args.set_due_date
+            assert not args.mark_complete
+            assert not args.delete_task
+            assert args.change_task_name
+            assert not args.change_task_description
 
-def test_cli_change_task_description(mocker):
+def test_cli_change_task_description():
     """CLI change_task_description tests"""
-    func = mocker.patch('to_do_app.command_line_interface.getattr')
-    func.return_value = True
+    getattr_mock = Mock()
+    getattr_mock.return_value = False
     for arg in ['-cd', '--change_task_description']:
-        main([arg])
-        func.assert_called()
-        args = func.call_args_list[7][0][0]
-        assert not args.add_task
-        assert not args.list_tasks
-        assert not args.set_start_date
-        assert not args.set_due_date
-        assert not args.mark_complete
-        assert not args.delete_task
-        assert not args.change_task_name
-        assert args.change_task_description
+        with patch('to_do_app.command_line_interface.getattr', getattr_mock) as mock:
+            main([arg])
+            mock.assert_called()
+            args = mock.call_args_list[7][0][0]
+            assert not args.add_task
+            assert not args.list_tasks
+            assert not args.set_start_date
+            assert not args.set_due_date
+            assert not args.mark_complete
+            assert not args.delete_task
+            assert not args.change_task_name
+            assert args.change_task_description
