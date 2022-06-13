@@ -13,7 +13,7 @@ def test_cli_add_task():
             main([arg])
             mock.assert_called()
             args = mock.call_args_list[0][0][0]
-            assert args.add_task
+            assert args.add_task == []
             assert not args.list_tasks
             assert not args.set_start_date
             assert not args.set_due_date
@@ -51,7 +51,7 @@ def test_cli_set_start_date():
             args = mock.call_args_list[2][0][0]
             assert not args.add_task
             assert not args.list_tasks
-            assert args.set_start_date
+            assert args.set_start_date == []
             assert not args.set_due_date
             assert not args.mark_complete
             assert not args.delete_task
@@ -70,7 +70,7 @@ def test_cli_set_due_date():
             assert not args.add_task
             assert not args.list_tasks
             assert not args.set_start_date
-            assert args.set_due_date
+            assert args.set_due_date == []
             assert not args.mark_complete
             assert not args.delete_task
             assert not args.change_task_name
@@ -89,7 +89,7 @@ def test_cli_mark_complete():
             assert not args.list_tasks
             assert not args.set_start_date
             assert not args.set_due_date
-            assert args.mark_complete
+            assert args.mark_complete == []
             assert not args.delete_task
             assert not args.change_task_name
             assert not args.change_task_description
@@ -108,7 +108,7 @@ def test_cli_delete_task():
             assert not args.set_start_date
             assert not args.set_due_date
             assert not args.mark_complete
-            assert args.delete_task
+            assert args.delete_task == []
             assert not args.change_task_name
             assert not args.change_task_description
 
@@ -127,7 +127,7 @@ def test_cli_change_task_name():
             assert not args.set_due_date
             assert not args.mark_complete
             assert not args.delete_task
-            assert args.change_task_name
+            assert args.change_task_name == []
             assert not args.change_task_description
 
 def test_cli_change_task_description():
@@ -146,4 +146,15 @@ def test_cli_change_task_description():
             assert not args.mark_complete
             assert not args.delete_task
             assert not args.change_task_name
-            assert args.change_task_description
+            assert args.change_task_description == []
+
+def test_num_args():
+    """CLI number of arguments tests"""
+    parser_mock = Mock()
+    parser_mock.side_effect = Exception()
+    with patch('argparse.ArgumentParser.error', parser_mock) as mock:
+        try:
+            main(['-a', 'Task']) # no description provided
+        except Exception:
+            mock.assert_called()
+            assert mock.call_args[0][0] == 'add_task must be called with 3 arguments or none at all.'

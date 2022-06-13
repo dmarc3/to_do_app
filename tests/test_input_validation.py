@@ -39,18 +39,22 @@ def test_validate_description():
 
 
 def test_validate_date():
-    """start_date/due_date validation tests"""
-    # Test valid start_date/due_date
+    """start_date/due_date/closed_date validation tests"""
+    # Test valid start_date/due_date/closed_date
     dates = ['2022-06-06', '2022-6-6', '1001-01-01', '9999-09-09']
     for date in dates:
         assert validate_input(dict(start_date=date))
         assert validate_input(dict(due_date=date))
+        assert validate_input(dict(closed_date=date))
+    # closed_date is assigned today's date
+    assert validate_input(dict(closed_date=[]))
     # Test invalid start_date/due_date
     dates = ['06-06-2022', 'June 6, 2022', '2022/06/06',
              '06/06/2022', '06-06-2022']
     for date in dates:
         assert not validate_input(dict(start_date=date))
         assert not validate_input(dict(due_date=date))
+        assert not validate_input(dict(closed_date=date))
 
 
 def test_validate_status():
@@ -69,13 +73,14 @@ def test_validate_priority():
     """priority validation tests"""
     # Test valid priority
     for priority in range(1, 11):
-        assert validate_input(dict(priority=str(priority)))
+        assert validate_input(dict(priority=priority))
     # Test invalid priority
     assert not validate_input(dict(priority='0'))
     assert not validate_input(dict(priority='11'))
     assert not validate_input(dict(priority='any'))
     assert not validate_input(dict(priority='thing'))
     assert not validate_input(dict(priority='else'))
+
 
 def test_get_valid_input():
     """test get_valid_input"""
@@ -84,4 +89,11 @@ def test_get_valid_input():
     with patch('builtins.input', input_mock) as mock_input:
         out = get_valid_input('status', 'PROMPT')
         assert out == dict(status='ACTIVE')
+        mock_input.assert_called()
+    
+    input_mock = Mock()
+    input_mock.side_effect = ['INVALID', 'ACTIVE']
+    with patch('builtins.input', input_mock) as mock_input:
+        out = get_valid_input('status', 'PROMPT', inputs=dict(task_id=1))
+        assert out == dict(status='ACTIVE', task_id=1)
         mock_input.assert_called()
