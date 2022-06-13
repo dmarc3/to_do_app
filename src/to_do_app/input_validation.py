@@ -1,5 +1,6 @@
 """ Input validation methods """
 import logging
+from datetime import datetime
 from validx import Dict, Str, Int, Datetime, exc
 
 __author__ = "Marcus Bakke"
@@ -13,10 +14,11 @@ _validator = Dict(
         start_date = Datetime(format='%Y-%m-%d'),
         due_date = Datetime(format='%Y-%m-%d'),
         status = Str(options=['ACTIVE', 'COMPLETED', 'DELETED']),
-        priority = Str(options=[str(x) for x in range(1, 11)]),
+        priority = Int(options=range(1, 11)),
+        closed_date = Datetime(format='%Y-%m-%d'),
     ),
     optional=['task_id', 'name', 'description', 'start_date', 'due_date',
-              'status', 'priority']
+              'status', 'priority', 'closed_date']
 )
 _formatter = exc.format_error
 
@@ -33,6 +35,11 @@ def validate_input(inputs: dict) -> bool:
     try:
         if 'task_id' in inputs:
             inputs['task_id'] = int(inputs['task_id'])
+        if 'priority' in inputs:
+            inputs['priority'] = int(inputs['priority'])
+        if 'closed_date' in inputs:
+            if not inputs['closed_date']:
+                inputs['closed_date'] = datetime.today().strftime('%Y-%m-%d')
     except (TypeError, ValueError) as error:
         _logger.error(error.args[0])
     # Pass inputs into validator
@@ -52,17 +59,19 @@ def validate_input(inputs: dict) -> bool:
     _logger.error('Validation failed.')
     return False
 
-def get_valid_input(attr: str, prompt: str, inputs=dict()) -> dict:
+def get_valid_input(attr: str, prompt: str, inputs=None) -> dict:
     """Prompts user for valid input
 
     Args:
         attr (str): Database attribute user is being prompted for input of
         prompt (str): Prompt text
-        inputs (dict, optional): Dictionary of inputs to be validated. Defaults to dict().
+        inputs (dict, optional): Dictionary of inputs to be validated.
 
     Returns:
         dict: Dictionary containing the validated user response
     """
+    if not inputs:
+        inputs = {}
     inputs[attr] = input(prompt)
     while not validate_input(inputs):
         inputs[attr] = input(prompt)

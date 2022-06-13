@@ -26,16 +26,17 @@ class TaskCollection:
                    start_date date,
                    due_date date,
                    status VARCHAR,
-                   priority VARCHAR,
+                   priority INTEGER,
+                   closed_date date,
                    PRIMARY KEY (task_id))"""))
 
-    def add_task(self, name, description, priority):
+    def add_task(self, name: str, description: str, priority: str):
         try:
             max_query = self.db.execute(text("""SELECT
-                                            task_id
-                                            FROM tasks
-                                            ORDER BY task_id DESC
-                                            LIMIT 1"""))
+                                                task_id
+                                                FROM tasks
+                                                ORDER BY task_id DESC
+                                                LIMIT 1"""))
             max_result = max_query.fetchone()
             max_id = max_result[0] + 1
         except TypeError:
@@ -50,47 +51,74 @@ class TaskCollection:
                                    'ACTIVE', '{priority}')"""))
             self.db.commit()
 
-    def print_tasks(self, column_name):
-        if column_name == 'completed':
-            date_type = input('Which date do you want to search by? ')
-            first_date = validation.date_response(date_type)
-            second_date = validation.date_response(date_type)
-            query = self.db.execute(text(f"""SELECT*
-                                             FROM tasks t
-                                             WHERE t.status=1
-                                             AND t.{date_type} BETWEEN '{first_date}' AND '{second_date}'"""))
-        elif column_name == 'overdue':
-            query = self.db.execute(text("""SELECT*
-                                            FROM tasks t
-                                            WHERE t.status=0
-                                            AND t.due_date<DATE()"""))
-        else:
-            query = self.db.execute(text(f"""SELECT*
-                                            FROM tasks t
-                                            ORDER BY t.{column_name}"""))
-        query_results = query.fetchall()
-        print('The following tasks are in the database:')
-        try:
-            for query_row in query_results:
-                print('task_id:', query_row.task_id, 'task:', query_row.task, 'task description:',
-                      query_row.description, 'start date:', query_row.start_date, 'due date:',
-                      query_row.due_date, 'status:', query_row.status, 'priority:', query_row.priority)
-        except TypeError:
-            print('None')
+    def sort_query(self, sort_by, direction='ASC'):
+        query = self.db.execute(text(f"""SELECT*
+                                         FROM tasks t
+                                         ORDER BY t.{sort_by} {direction}
+                                     """))
+        return self.print_query(query)
 
-    def set_date(self, task_id, start_date=None, due_date=None):
-        if start_date:
-            self.db.execute(text(f"""UPDATE tasks
-                                     SET start_date='{start_date}'
+    def sort_open_query(self, sort_by: str, direction='ASC'):
+        query = self.db.execute(text(f"""SELECT*
+                                         FROM tasks t
+                                         WHERE t.status='ACTIVE'
+                                         ORDER BY t.{sort_by} {direction}"""))
+        return self.print_query(query)
+
+    def filter_closed_between_query(self, start, end):
+        query = self.db.execute(text(f"""SELECT*
+                                         FROM tasks t
+                                         WHERE (t.status='COMPLETED' OR t.status='DELETED')
+                                         AND t.closed_date BETWEEN '{start}' AND '{end}'"""))
+        return self.print_query(query)
+
+    def filter_overdue_query(self, filter_by='due_date'):
+        query = self.db.execute(text(f"""SELECT*
+                                         FROM tasks t
+                                         WHERE t.{filter_by}<DATE()"""))
+        return self.print_query(query)
+
+    def print_query(self, query: list):
+        # Build header
+        header = list(query.keys())
+        header = [head.replace('_', ' ').upper() for head in header]
+        widths = [len(head)+2 for head in header]
+        # Calculate maximum column widths
+        query = query.all()
+        for row in query:
+            for ind, value in enumerate(row):
+                value = str(value)
+                if len(value)+2 > widths[ind]:
+                    widths[ind] = len(value)+2
+        # Print results
+        out = '\n'
+        for ind, head in enumerate(header):
+            out += head.ljust(widths[ind])
+        out += '\n'
+        out += '-'*(len(out)-2)+'\n'
+        for row in query:
+            for ind, value in enumerate(row):
+                value = str(value)
+                out += value.ljust(widths[ind])
+            out += '\n'
+        out += '\n'
+        print(out)
+
+    def set_date(self, task_id: int, start_date=None, due_date=None, closed_date=None):
+        dates = dict(
+            start_date=start_date,
+            due_date=due_date,
+            closed_date=closed_date,
+        )
+        for key, value in dates.items():
+            if value:
+                self.db.execute(text(f"""UPDATE tasks
+                                     SET {key}='{value}'
                                      WHERE task_id={task_id}"""))
             self.db.commit()
-        if due_date:
-            self.db.execute(text(f"""UPDATE tasks
-                                     SET due_date='{due_date}'
-                                     WHERE task_id={task_id}"""))
-            self.db.commit()
+            break
 
-    def update(self, task_id, name=None, description=None, status=None):
+    def update(self, task_id: int, name=None, description=None, status=None, closed_date=None):
         if name:
             self.db.execute(text(f"""UPDATE tasks
                                      SET name='{name}'
@@ -105,5 +133,11 @@ class TaskCollection:
             self.db.execute(text(f"""UPDATE tasks
                                      SET status='{status}'
                                      WHERE task_id={task_id}"""))
+            if status in ['COMPLETED', 'DELETED']:
+                if not closed_date:
+                    closed_date = datetime.today().strftime('%Y-%m-%d')
+                self.db.execute(text(f"""UPDATE tasks
+                                        SET closed_date='{closed_date}'
+                                        WHERE task_id={task_id}"""))
             self.db.commit()
 
