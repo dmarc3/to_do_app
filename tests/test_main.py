@@ -5,6 +5,7 @@ from to_do_app import main
 from to_do_app import task
 __author__ = "Marcus Bakke"
 
+
 def mock_with_args(inp, task_func, func, expected):
     """Mock function with arguments"""
     tasks = task.TaskCollection()

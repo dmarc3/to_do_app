@@ -5,6 +5,7 @@ from to_do_app.input_validation import get_valid_input
 __author__ = 'Marcus Bakke'
 _logger = logging.getLogger(__name__)
 
+
 def add_task(tasks, arguments: list) -> bool:
     """adds a new task to database"""
     if not arguments:
@@ -51,14 +52,11 @@ Please enter your choice: """).strip())
             break
         _logger.info('%s is an invalid option.', option)
     if option == 1:
-        inputs = dict(sort_by='task_id')
-        func = tasks.sort_query
+        func = tasks.sort_query('task_id', 'ASC')
     elif option == 2:
-        inputs = dict(sort_by='priority', direction='DESC')
-        func = tasks.sort_query
+        func = tasks.sort_query(sort_by='priority', direction='DESC')
     elif option == 3:
-        inputs = dict(sort_by='due_date')
-        func = tasks.sort_open_query
+        func = tasks.sort_query(sort_by='due_date', direction='ASC')
     elif option == 4:
         # Get start
         dates = get_valid_input(
@@ -71,15 +69,14 @@ Please enter your choice: """).strip())
             'REQUEST: What date would you like to end at (YYYY-MM-DD)?\nDATE: ',
             dates,
         )
-        inputs = dict(start=dates['start_date'], end=dates['due_date'])
-        func = tasks.filter_closed_between_query
+        func = tasks.filter_closed_between_query(start=dates['start_date'], end=dates['due_date'])
     else:
         inputs = {}
         func = tasks.filter_overdue_query
     # Execute query and print
-    print(func(**inputs))
+    # print(tasks.print_query(func))
 
-    return True
+    return func
 
 
 def set_start_date(tasks, arguments: list) -> bool:
