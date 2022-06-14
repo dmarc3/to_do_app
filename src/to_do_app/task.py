@@ -9,11 +9,11 @@ _logger = logging.getLogger(__name__)
 class TaskCollection:
     """ Class to interact with SQL database """
 
-    def __init__(self):
+    def __init__(self, path='sqlite:///task.db'):
         """ Initialize TaskCollection """
-        self.engine = create_engine('sqlite:///task.db', future=True)
+        self.engine = create_engine(path, future=True)
         self.db = self.engine.connect()
-        _logger.debug('Connection to sqlite:///task.db established.')
+        _logger.debug('Connection to %s established.', path)
         try:
             self.db.execute(text('SELECT * FROM tasks'))
         except exc.OperationalError:
@@ -102,7 +102,7 @@ class TaskCollection:
                 out += value.ljust(widths[ind])
             out += '\n'
         out += '\n'
-        print(out)
+        return out
 
     def set_date(self, task_id: int, start_date=None, due_date=None, closed_date=None):
         dates = dict(

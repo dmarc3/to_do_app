@@ -77,7 +77,7 @@ Please enter your choice: """).strip())
         inputs = {}
         func = tasks.filter_overdue_query
     # Execute query and print
-    func(**inputs)
+    print(func(**inputs))
 
     return True
 
