@@ -49,8 +49,7 @@ def list_tasks(tasks, *_) -> bool:
 Please enter your choice: """).strip())
         if option in [1, 2, 3, 4, 5]:
             break
-        else:
-            _logger.info(f'{option} is an invalid option.')
+        _logger.info('%s is an invalid option.', option)
     if option == 1:
         inputs = dict(sort_by='task_id')
         func = tasks.sort_query

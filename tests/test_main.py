@@ -1,8 +1,8 @@
 """ Unittests for main functions """
 from datetime import datetime
 from unittest.mock import Mock, patch
-import to_do_app.main as main
-import to_do_app.task as task
+from to_do_app import main
+from to_do_app import task
 __author__ = "Marcus Bakke"
 
 def mock_with_args(inp, task_func, func, expected):
@@ -155,10 +155,10 @@ def test_mark_complete_no_args():
     """test mark_complete with no args"""
     inp = [[1, ''], [1, '2022-06-13']]
     task_func = 'to_do_app.task.TaskCollection.update'
-    expected = [dict(task_id=1, 
+    expected = [dict(task_id=1,
                      closed_date=datetime.today().strftime('%Y-%m-%d'),
                      status='COMPLETED'),
-                dict(task_id=1, 
+                dict(task_id=1,
                      closed_date='2022-06-13',
                      status='COMPLETED')]
     func = main.mark_complete
