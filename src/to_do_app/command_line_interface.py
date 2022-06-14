@@ -117,8 +117,9 @@ def main(arguments: List[str]):
         if isinstance(call_args, list) or call_args:
             # Confirm appropriate number of arguments provided
             if num and len(call_args) not in [0]+num:
-                parser.error(func.__name__+f' must be called with {" or ".join([str(n) for n in num])} arguments'\
-                            ' or none at all.')
+                parser.error(func.__name__+' must be called with '
+                             f'{" or ".join([str(n) for n in num])} arguments' \
+                             ' or none at all.')
             _logger.info("Executing %s: %s...", func.__name__, func.__doc__)
             if func(tasks, call_args):
                 _logger.info("%s completed successfully.", func.__name__)

@@ -90,7 +90,7 @@ def test_get_valid_input():
         out = get_valid_input('status', 'PROMPT')
         assert out == dict(status='ACTIVE')
         mock_input.assert_called()
-    
+
     input_mock = Mock()
     input_mock.side_effect = ['INVALID', 'ACTIVE']
     with patch('builtins.input', input_mock) as mock_input:

@@ -148,13 +148,17 @@ def test_cli_change_task_description():
             assert not args.change_task_name
             assert args.change_task_description == []
 
+class ArgumentParserError(Exception):
+    """Custom exception for argparse error test"""
+
 def test_num_args():
     """CLI number of arguments tests"""
     parser_mock = Mock()
-    parser_mock.side_effect = Exception()
+    parser_mock.side_effect = ArgumentParserError()
     with patch('argparse.ArgumentParser.error', parser_mock) as mock:
         try:
             main(['-a', 'Task']) # no description provided
-        except Exception:
+        except ArgumentParserError:
             mock.assert_called()
-            assert mock.call_args[0][0] == 'add_task must be called with 3 arguments or none at all.'
+            assert mock.call_args[0][0] == 'add_task must be called ' \
+                                            'with 3 arguments or none at all.'

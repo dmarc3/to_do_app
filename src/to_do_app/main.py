@@ -36,7 +36,7 @@ def add_task(tasks, arguments: list) -> bool:
     return True
 
 
-def list_tasks(tasks, arguments: list) -> bool:
+def list_tasks(tasks, *_) -> bool:
     """lists tasks from database"""
     while True:
         option = int(input("""
@@ -49,8 +49,7 @@ def list_tasks(tasks, arguments: list) -> bool:
 Please enter your choice: """).strip())
         if option in [1, 2, 3, 4, 5]:
             break
-        else:
-            _logger.info(f'{option} is an invalid option.')
+        _logger.info('%s is an invalid option.', option)
     if option == 1:
         inputs = dict(sort_by='task_id')
         func = tasks.sort_query
@@ -74,11 +73,11 @@ Please enter your choice: """).strip())
         )
         inputs = dict(start=dates['start_date'], end=dates['due_date'])
         func = tasks.filter_closed_between_query
-    elif option == 5:
+    else:
         inputs = {}
         func = tasks.filter_overdue_query
     # Execute query and print
-    func(**inputs)
+    print(func(**inputs))
 
     return True
 
@@ -141,6 +140,7 @@ def mark_complete(tasks, arguments: list) -> bool:
             'closed_date',
             'REQUEST: Provide date the task was closed on (YYYY-MM-DD)'\
             '(Blank to use todays date):\nCLOSED DATE: ',
+            task,
         )
         task['status'] = 'COMPLETED'
     else:
