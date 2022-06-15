@@ -2,7 +2,7 @@ from flask import Flask, jsonify
 from flask_restful import Resource, Api
 from sqlalchemy import create_engine
 from to_do_app.input_validation import get_valid_input
-import task
+from to_do_app import task
 
 
 class Task(Resource):
