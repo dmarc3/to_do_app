@@ -11,7 +11,6 @@ class Task(Resource):
 
     def post(self):
         main.add_task(task_collection, [new_task, new_description, new_priority])
-        return jsonify(task)
 
 
 if __name__ == "__main__":
@@ -33,11 +32,13 @@ if __name__ == "__main__":
             new_task = input('What new task do you want to add? ')
             new_description = input('Describe the new task ')
             new_priority = input('How do you want to prioritize this task? ')
-            query = main.list_tasks(task_collection)
+            # query = main.list_tasks(task_collection)
             api.add_resource(Task, '/tasks')
+            query = main.list_tasks(task_collection)
 
         app.run(port="5002")
         task_collection.dispose()
 
 # task_collection = task.TaskCollection()
 # main.add_task(task_collection, ['testing new entry', 'python 320', '8'])
+# main.delete_task(task_collection, '1')
