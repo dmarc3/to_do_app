@@ -39,6 +39,5 @@ if __name__ == "__main__":
         app.run(port="5002")
         task_collection.dispose()
 
-# task_collection = task.TaskCollection()
 # main.add_task(task_collection, ['testing new entry', 'python 320', '8'])
 # main.delete_task(task_collection, '1')
