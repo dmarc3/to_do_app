@@ -16,7 +16,7 @@ class Task(Resource):
 class Priority(Resource):
     def get(self):
         task_collection = task.TaskCollection()
-        query = task_collection.sort_query('priority', 'ASC')
+        query = task_collection.sort_query('priority', 'DESC')
         result = {'data': [dict(zip(tuple(query.keys()), i)) for i in query]}
         return jsonify(result)
 
@@ -24,7 +24,7 @@ class Priority(Resource):
 class DueDate(Resource):
     def get(self):
         task_collection = task.TaskCollection()
-        query = task_collection.sort_query('due_date', 'ASC')
+        query = task_collection.sort_query('due_date', 'DESC')
         result = {'data': [dict(zip(tuple(query.keys()), i)) for i in query]}
         return jsonify(result)
 
@@ -63,7 +63,6 @@ if __name__ == "__main__":
     api.add_resource(Task, '/tasks')  # task 1-sorted by task id
     api.add_resource(Priority, '/priority')  # task 2-sorted by priority
     api.add_resource(DueDate, '/due_date')  # task 3-sorted by due date
-    api.add_resource(Between, '/between')  # task 4-between two dates
     api.add_resource(Between, '/between')  # task 4-between two dates
     api.add_resource(Overdue, '/overdue')  # task 5-overdue
     app.run(port="5002")

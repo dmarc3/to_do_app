@@ -35,8 +35,8 @@ class TestTaskCollection:
         expected_result_2 = expected_2.fetchone()
         assert expected_result_2, 'Test Task 2'
 
-    def test_sort(self):
-        tasks.
+    # def test_sort(self):
+    #     tasks.
 
     # def test_set_start_date():
     #     """test set_Start_date method"""
