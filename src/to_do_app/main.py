@@ -73,7 +73,7 @@ Please enter your choice: """).strip())
     else:
         func = tasks.filter_overdue_query()
     # Execute query and print
-    print(tasks.print_query(list(func.keys()), func.all()))
+    # print(tasks.print_query(list(func.keys()), func.all()))
     return func
 
 

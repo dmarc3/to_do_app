@@ -1,7 +1,7 @@
 from flask import Flask, jsonify
 from flask_restful import Resource, Api
-import main
-import task
+from to_do_app import main
+from to_do_app import task
 
 
 class Task(Resource):
