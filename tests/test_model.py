@@ -1,14 +1,18 @@
 """ Unittests for API model """
 import pytest
 from flask import Flask, jsonify
+from flask_restful import Resource, Api
 from to_do_app.task import TaskCollection
+from to_do_app.task_api import Task
 
 
 @pytest.fixture()
-def app():
+def client():
     """Initialize test app"""
-    test_app = Flask(__name__)
-    yield test_app.test_client()
+    app = Flask(__name__)
+    api = Api(app)
+    api.add_resource(Task, '/tasks')  # task 1-sorted by task id
+    yield app.test_client()
 
 @pytest.fixture()
 def tasks():
@@ -27,8 +31,8 @@ def tasks():
 class TestModelGet:
     """Unittest class for model GET resources"""
 
-    def test_task(self, app, tasks):
+    def test_task(self, tasks, client):
         """test add_task method"""
         import pdb; pdb.set_trace()
-        print(app)
+        print(client)
         print(tasks)
