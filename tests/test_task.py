@@ -24,7 +24,6 @@ class TestTaskCollection:
             priority='10',
         )
         out = tasks.sort_query(sort_by='task_id')
-        import pdb; pdb.set_trace()
 
 
     # def test_list_tasks():
