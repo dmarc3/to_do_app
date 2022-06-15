@@ -56,28 +56,28 @@ class TaskCollection:
                                          FROM tasks t
                                          ORDER BY t.{sort_by} {direction}
                                      """))
-        return self.print_query(query)
+        return query
 
     def sort_open_query(self, sort_by: str, direction='ASC'):
         query = self.db.execute(text(f"""SELECT*
                                          FROM tasks t
                                          WHERE t.status='ACTIVE'
                                          ORDER BY t.{sort_by} {direction}"""))
-        return self.print_query(query)
+        return query
 
     def filter_closed_between_query(self, start, end):
         query = self.db.execute(text(f"""SELECT*
                                          FROM tasks t
                                          WHERE (t.status='COMPLETED' OR t.status='DELETED')
                                          AND t.closed_date BETWEEN '{start}' AND '{end}'"""))
-        return self.print_query(query)
+        return query
 
     def filter_overdue_query(self, filter_by='due_date'):
         query = self.db.execute(text(f"""SELECT*
                                          FROM tasks t
                                          WHERE t.status='ACTIVE'
                                          AND t.{filter_by}<DATE()"""))
-        return self.print_query(query)
+        return query
 
     def print_query(self, query):
         # Build header
