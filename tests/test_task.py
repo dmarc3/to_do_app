@@ -3,6 +3,7 @@ import pytest
 from sqlalchemy import text
 from to_do_app.task import TaskCollection
 
+
 @pytest.fixture()
 def tasks():
     """Initialize in-memory TaskCollection"""
@@ -17,20 +18,25 @@ class TestTaskCollection:
         tasks.add_task(
             name='Test Task 1',
             description='Test description 1...',
-            priority='4',
-        )
+            priority='4', )
+        assert type(tasks), TaskCollection
+
+        expected = tasks.db.execute((text("""SELECT t.name FROM tasks t
+                                             WHERE t.task_id=1""")))
+        expected_result = expected.fetchone()
+        assert expected_result, 'Test Task 1'
         tasks.add_task(
             name='Test Task 2',
             description='Test description 2...',
             priority='10',
         )
-        out = tasks.sort_query(sort_by='task_id')
+        expected_2 = tasks.db.execute((text("""SELECT t.name FROM tasks t
+                                             WHERE t.task_id=2""")))
+        expected_result_2 = expected_2.fetchone()
+        assert expected_result_2, 'Test Task 2'
 
-
-    # def test_list_tasks():
-    #     """test list_tasks method"""
-    #     pass
-
+    def test_sort(self):
+        tasks.
 
     # def test_set_start_date():
     #     """test set_Start_date method"""
