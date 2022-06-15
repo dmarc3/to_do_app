@@ -52,11 +52,14 @@ Please enter your choice: """).strip())
             break
         _logger.info('%s is an invalid option.', option)
     if option == 1:
-        func = tasks.sort_query('task_id', 'ASC')
+        inputs = dict(sort_by='task_id')
+        func = tasks.sort_query
     elif option == 2:
-        func = tasks.sort_query(sort_by='priority', direction='DESC')
+        inputs = dict(sort_by='priority', direction='DESC')
+        func = tasks.sort_query
     elif option == 3:
-        func = tasks.sort_query(sort_by='due_date', direction='ASC')
+        inputs = dict(sort_by='due_date')
+        func = tasks.sort_open_query
     elif option == 4:
         # Get start
         dates = get_valid_input(
@@ -69,12 +72,15 @@ Please enter your choice: """).strip())
             'REQUEST: What date would you like to end at (YYYY-MM-DD)?\nDATE: ',
             dates,
         )
-        func = tasks.filter_closed_between_query(start=dates['start_date'], end=dates['due_date'])
+        inputs = dict(start=dates['start_date'], end=dates['due_date'])
+        func = tasks.filter_closed_between_query
     else:
-        func = tasks.filter_overdue_query()
+        inputs = {}
+        func = tasks.filter_overdue_query
     # Execute query and print
-    # print(tasks.print_query(list(func.keys()), func.all()))
-    return func
+    print(func(**inputs))
+
+    return True
 
 
 def set_start_date(tasks, arguments: list) -> bool:

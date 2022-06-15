@@ -6,7 +6,6 @@ from sqlalchemy import create_engine, text, exc
 __author__ = 'Kathleen Wong'
 _logger = logging.getLogger(__name__)
 
-
 class TaskCollection:
     """ Class to interact with SQL database """
 
@@ -57,34 +56,36 @@ class TaskCollection:
                                          FROM tasks t
                                          ORDER BY t.{sort_by} {direction}
                                      """))
-        return query
+        return self.print_query(query)
 
     def sort_open_query(self, sort_by: str, direction='ASC'):
         query = self.db.execute(text(f"""SELECT*
                                          FROM tasks t
                                          WHERE t.status='ACTIVE'
                                          ORDER BY t.{sort_by} {direction}"""))
-        return query
+        return self.print_query(query)
 
     def filter_closed_between_query(self, start, end):
         query = self.db.execute(text(f"""SELECT*
                                          FROM tasks t
                                          WHERE (t.status='COMPLETED' OR t.status='DELETED')
                                          AND t.closed_date BETWEEN '{start}' AND '{end}'"""))
-        return query
+        return self.print_query(query)
 
     def filter_overdue_query(self, filter_by='due_date'):
         query = self.db.execute(text(f"""SELECT*
                                          FROM tasks t
                                          WHERE t.status='ACTIVE'
                                          AND t.{filter_by}<DATE()"""))
-        return query
+        return self.print_query(query)
 
-    def print_query(self, header: list, query: list):
+    def print_query(self, query):
         # Build header
+        header = list(query.keys())
         header = [head.replace('_', ' ').upper() for head in header]
         widths = [len(head)+2 for head in header]
         # Calculate maximum column widths
+        query = query.all()
         for row in query:
             for ind, value in enumerate(row):
                 value = str(value)
