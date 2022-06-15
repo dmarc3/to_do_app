@@ -76,16 +76,15 @@ class TaskCollection:
     def filter_overdue_query(self, filter_by='due_date'):
         query = self.db.execute(text(f"""SELECT*
                                          FROM tasks t
-                                         WHERE t.{filter_by}<DATE()"""))
+                                         WHERE t.status='ACTIVE'
+                                         AND t.{filter_by}<DATE()"""))
         return query
 
-    def print_query(self, query: list):
+    def print_query(self, header: list, query: list):
         # Build header
-        header = list(query.keys())
         header = [head.replace('_', ' ').upper() for head in header]
         widths = [len(head)+2 for head in header]
         # Calculate maximum column widths
-        query = query.all()
         for row in query:
             for ind, value in enumerate(row):
                 value = str(value)
@@ -116,8 +115,8 @@ class TaskCollection:
                 self.db.execute(text(f"""UPDATE tasks
                                      SET {key}='{value}'
                                      WHERE task_id={task_id}"""))
-            self.db.commit()
-            break
+                self.db.commit()
+                break
 
     def update(self, task_id: int, name=None, description=None, status=None, closed_date=None):
         if name:

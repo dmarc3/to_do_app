@@ -70,8 +70,10 @@ Please enter your choice: """).strip())
             dates,
         )
         func = tasks.filter_closed_between_query(start=dates['start_date'], end=dates['due_date'])
+    else:
+        func = tasks.filter_overdue_query()
     # Execute query and print
-    # print(tasks.print_query(func))
+    print(tasks.print_query(list(func.keys()), func.all()))
     return func
 
 
