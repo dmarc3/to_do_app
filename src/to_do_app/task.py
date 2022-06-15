@@ -71,7 +71,7 @@ class TaskCollection:
                                          FROM tasks t
                                          WHERE (t.status='COMPLETED' OR t.status='DELETED')
                                          AND t.closed_date BETWEEN '{start}' AND '{end}'"""))
-        return self.query
+        return query
 
     def filter_overdue_query(self, filter_by='due_date'):
         query = self.db.execute(text(f"""SELECT*
