@@ -10,8 +10,8 @@ class Task(Resource):
         return jsonify(result)
 
     def post(self):
-        new_entry = main.add_task(task_collection, [new_task, new_description, new_priority])
-        return task_collection.serialize(new_entry), 201
+        main.add_task(task_collection, [new_task, new_description, new_priority])
+        return jsonify(task)
 
 
 if __name__ == "__main__":
@@ -33,7 +33,8 @@ if __name__ == "__main__":
             new_task = input('What new task do you want to add? ')
             new_description = input('Describe the new task ')
             new_priority = input('How do you want to prioritize this task? ')
-            api.add_resource(Task, '/tasks', '/')
+            query = main.list_tasks(task_collection)
+            api.add_resource(Task, '/tasks')
 
         app.run(port="5002")
         task_collection.dispose()
