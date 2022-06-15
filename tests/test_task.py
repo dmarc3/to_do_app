@@ -8,6 +8,7 @@ def tasks():
     """Initialize in-memory TaskCollection"""
     yield TaskCollection(path='sqlite://')
 
+
 class TestTaskCollection:
     """Unittest class for TaskCollection"""
 
@@ -18,6 +19,7 @@ class TestTaskCollection:
             description='Test description 1...',
             priority='4',
         )
+        assert
         tasks.add_task(
             name='Test Task 2',
             description='Test description 2...',
