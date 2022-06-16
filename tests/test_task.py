@@ -88,7 +88,6 @@ class TestTaskCollection:
         tasks.update(1, name='Testing Update', description='testing',
                      closed_date='2022-06-03', status='COMPLETED')
         tasks.update(2, closed_date='2022-04-06', status='COMPLETED')
-        tasks.update(3, status='COMPLETED')
         closed_check = tasks.filter_closed_between_query('2022-04-05', '2022-04-07').fetchone().name
         expected_closed = tasks.db.execute((text("""SELECT t.name FROM tasks t
                                                    WHERE t.closed_date BETWEEN '2022-04-05' AND '2022-04-06'
