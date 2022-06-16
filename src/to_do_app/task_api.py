@@ -77,7 +77,7 @@ def run_app(path="sqlite:///task.db"):
     # )
     # api.add_resource(Between, f'/between{dates["start_date"]}&{dates["due_date"]}')  # task 4-between two dates
     api.add_resource(Overdue, '/overdue')  # task 5-overdue
-    api.add_resource(AddTask, )
+    api.add_resource(AddTask, '/addtask')
     return app, db
 
 def close_app(db):
