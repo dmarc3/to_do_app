@@ -1,0 +1,530 @@
+commit c1cd5cc9f1016ca239613b2a65c6047d0f694a51
+Merge: 10e413e edd11a4
+Author: dmarc3 <49968277+dmarc3@users.noreply.github.com>
+Date:   Thu Jun 16 09:36:13 2022 -0700
+
+    Merge pull request #9 from dmarc3/marcus
+    
+    Complete Model Unittests and Final Cleanup
+
+commit 10e413e16fe77b2af8d240210ae65b7a7a7f3295
+Author: Marcus Bakke <marcusabakke@gmail.com>
+Date:   Thu Jun 16 09:35:53 2022 -0700
+
+    Resolve conflict with marcus branch
+
+commit edd11a402c4d389a3eba1a7f1f78b0a16325123b
+Author: Marcus Bakke <marcusabakke@gmail.com>
+Date:   Thu Jun 16 09:31:58 2022 -0700
+
+    Add wishlist to README section
+
+commit 21ff233993bf2d4e4705c2e4b27ac113740cfd05
+Author: Marcus Bakke <marcusabakke@gmail.com>
+Date:   Thu Jun 16 00:50:52 2022 -0700
+
+    Update README. Complete model unittests. Pylint code. Profit
+
+commit dc0438cd4cac636d8237e66c08dc534fd2cca6e8
+Merge: 7202ede 8ae55b7
+Author: Marcus Bakke <marcusabakke@gmail.com>
+Date:   Thu Jun 16 00:26:50 2022 -0700
+
+    Merge branch 'marcus' of https://github.com/dmarc3/to_do_app into marcus
+
+commit 7202ede64f33eae3ce7c5ac7699e473642ffc623
+Author: Marcus Bakke <marcusabakke@gmail.com>
+Date:   Thu Jun 16 00:26:20 2022 -0700
+
+    Complete unittesting for API. Add POST functionality and refactor API
+
+commit 8ae55b76e2fc93774a65ecd34235e4b15941b583
+Author: kathleen101 <81065967+kathleen101@users.noreply.github.com>
+Date:   Wed Jun 15 22:12:59 2022 -0700
+
+    Update test_task.py
+    
+    99% coverage.
+
+commit 6fb7378120925e1f04198a6373bdc777a303c485
+Author: kathleen101 <81065967+kathleen101@users.noreply.github.com>
+Date:   Wed Jun 15 21:41:15 2022 -0700
+
+    Update test_task.py
+    
+    Editted tests.
+
+commit 17ea5402c5ef852f3cdf8367ba8135750d56e090
+Author: kathleen101 <81065967+kathleen101@users.noreply.github.com>
+Date:   Wed Jun 15 21:24:52 2022 -0700
+
+    Update test_task.py
+    
+    Added more tests.
+
+commit 6bf7cc88a04f4960b44f74d7317abf96eadc214d
+Author: Marcus Bakke <marcusabakke@gmail.com>
+Date:   Wed Jun 15 21:05:35 2022 -0700
+
+    Save post additoin
+
+commit 8f498c88c4d76f2a4d318cb4afa52c56bcda15d3
+Author: Marcus Bakke <marcusabakke@gmail.com>
+Date:   Wed Jun 15 20:57:42 2022 -0700
+
+    Initial setup for AddTask POST
+
+commit 6fa0af2e9001279a45065b85617f80688b777ddc
+Author: Marcus Bakke <marcusabakke@gmail.com>
+Date:   Wed Jun 15 20:48:05 2022 -0700
+
+    Initial API unittest setup
+
+commit 821a7bc22a60270ebbe1461dc8017a8ea8a0f835
+Author: kathleen101 <81065967+kathleen101@users.noreply.github.com>
+Date:   Wed Jun 15 20:45:17 2022 -0700
+
+    Update test_task.py
+    
+    Committing tests.
+
+commit a318ee0e2a58efd8aa2ee859fa8c267400d68615
+Merge: 38386d7 fe51a5e
+Author: dmarc3 <49968277+dmarc3@users.noreply.github.com>
+Date:   Wed Jun 15 18:45:33 2022 -0700
+
+    Merge pull request #8 from dmarc3/main
+    
+    Bring marcus branch up to date with main branch
+
+commit 38386d7e70b72789c1e91b5ec5bc1cc586273857
+Author: Marcus Bakke <marcusabakke@gmail.com>
+Date:   Wed Jun 15 18:43:37 2022 -0700
+
+    Bring marcus up to date with main branch
+
+commit 12d477cd3c1e40014902b5c5578533dce5a16419
+Author: Marcus Bakke <marcusabakke@gmail.com>
+Date:   Wed Jun 15 18:25:37 2022 -0700
+
+    Remove test_task.py in order to merge with main.py
+
+commit fe51a5e8ad8f8f960eedc07e4494617e3b61f520
+Author: Marcus Bakke <marcusabakke@gmail.com>
+Date:   Tue Jun 14 23:39:03 2022 -0700
+
+    Fix main unittests after API integration
+
+commit 612624da3a85a095475ec0e07be0fcbc16ba6b99
+Author: Marcus Bakke <marcusabakke@gmail.com>
+Date:   Tue Jun 14 23:19:57 2022 -0700
+
+    initial test_model.py setup
+
+commit 57ca129aabffbabfc9afe0248ae60a271fc01244
+Author: Marcus Bakke <marcusabakke@gmail.com>
+Date:   Tue Jun 14 22:58:59 2022 -0700
+
+    Uncomment test_main.py
+
+commit 55eb3e6c4ad1c90fb59a55aa3ca44dbdefa7c5ca
+Merge: 7843872 777f3c6
+Author: dmarc3 <49968277+dmarc3@users.noreply.github.com>
+Date:   Tue Jun 14 22:30:59 2022 -0700
+
+    Merge pull request #7 from dmarc3/Kathleen
+    
+    Merge API additions
+
+commit 777f3c66d009ceb782e3378dc0226e2f800c870e
+Merge: ee845cc 7843872
+Author: dmarc3 <49968277+dmarc3@users.noreply.github.com>
+Date:   Tue Jun 14 22:30:15 2022 -0700
+
+    Merge branch 'main' into Kathleen
+
+commit 7843872d31cd359a86717a2e6d94f781fb2dfac2
+Author: Marcus Bakke <marcusabakke@gmail.com>
+Date:   Tue Jun 14 22:21:33 2022 -0700
+
+    Undo changes to main/task list_tasks functionality for prelim API setup
+
+commit ee845cc188876b138769695d0d1a0f93e96dc886
+Author: kathleen101 <81065967+kathleen101@users.noreply.github.com>
+Date:   Tue Jun 14 22:07:27 2022 -0700
+
+    Updated between call.
+
+commit 4c13f3e0a70fae546663ba01df663bf8a5092893
+Author: kathleen101 <81065967+kathleen101@users.noreply.github.com>
+Date:   Tue Jun 14 22:00:19 2022 -0700
+
+    Removed second Between call + updated ASC -> DESC.
+
+commit aa02db17e4a62be0e0368cec4a438113e979d2e8
+Author: kathleen101 <81065967+kathleen101@users.noreply.github.com>
+Date:   Tue Jun 14 21:55:13 2022 -0700
+
+    Finishing up API calls.
+
+commit 46a23c20d06f8f496ec64b6e651caa93cec82fc6
+Author: kathleen101 <81065967+kathleen101@users.noreply.github.com>
+Date:   Tue Jun 14 21:47:20 2022 -0700
+
+    Added #2 to ask in assignment.
+
+commit 9f19be15cc53da3272c8d1179e44c3677c5d4aaa
+Author: Marcus Bakke <marcusabakke@gmail.com>
+Date:   Tue Jun 14 21:35:55 2022 -0700
+
+    Remove unnecessary main.py file in root directory. Update import statements in task_api
+
+commit 117ec6e36e0a7fe46b140784c252b86ef86fb034
+Author: kathleen101 <81065967+kathleen101@users.noreply.github.com>
+Date:   Tue Jun 14 21:34:40 2022 -0700
+
+    Updated api call.
+
+commit ec09a36f3db584e167905acb8c00393b256bc79b
+Merge: 1e2d615 0eb77b4
+Author: kathleen101 <81065967+kathleen101@users.noreply.github.com>
+Date:   Tue Jun 14 21:22:53 2022 -0700
+
+    Merge remote-tracking branch 'origin/Kathleen' into Kathleen
+
+commit 1e2d615f637ab58f977acdd7fb99e8f9a82c142d
+Merge: c8a0339 b30ba87
+Author: kathleen101 <81065967+kathleen101@users.noreply.github.com>
+Date:   Tue Jun 14 21:22:13 2022 -0700
+
+    Merge branch 'main' of https://github.com/dmarc3/to_do_app into Kathleen
+    
+     Conflicts:
+    	src/to_do_app/main.py
+    	tests/test_task.py
+
+commit c8a0339a964a00189756b5a2f50ca5406af9116e
+Author: kathleen101 <81065967+kathleen101@users.noreply.github.com>
+Date:   Tue Jun 14 21:21:28 2022 -0700
+
+    Testing.
+
+commit b30ba87db4a14340a8362080d47ed91a8a2eca7d
+Author: Marcus Bakke <marcusabakke@gmail.com>
+Date:   Tue Jun 14 21:18:40 2022 -0700
+
+    Fix set_due_date and list_tasks option 5
+
+commit 0eb77b4088f4b1a9d9eeaf1b841d57212c763ea5
+Merge: 0747e18 5fe5224
+Author: kathleen101 <81065967+kathleen101@users.noreply.github.com>
+Date:   Tue Jun 14 20:54:59 2022 -0700
+
+    Merge pull request #6 from dmarc3/main
+    
+    Added GET API
+
+commit 3d4b9924914761d1da573828842fcc472377d32c
+Author: Marcus Bakke <marcusabakke@gmail.com>
+Date:   Tue Jun 14 20:40:15 2022 -0700
+
+    Update to README
+
+commit 5fe5224fcf47643e0a25a0dd78bbfdd698374793
+Author: kathleen101 <81065967+kathleen101@users.noreply.github.com>
+Date:   Tue Jun 14 20:09:48 2022 -0700
+
+    Added GET API
+
+commit 0747e18fefe2aaaa0a2cda355e267dbf032b06fe
+Author: kathleen101 <81065967+kathleen101@users.noreply.github.com>
+Date:   Tue Jun 14 19:35:52 2022 -0700
+
+    Fixed error in API
+
+commit 179440925c7ec85a80ecbb9d01bbe13712da965a
+Author: kathleen101 <81065967+kathleen101@users.noreply.github.com>
+Date:   Tue Jun 14 17:58:37 2022 -0700
+
+    Revised API
+
+commit 2f3e4d973393db5685476900db85d3d7d04de312
+Author: kathleen101 <81065967+kathleen101@users.noreply.github.com>
+Date:   Tue Jun 14 14:37:33 2022 -0700
+
+    Adding to API
+
+commit 29a6d73c350bff89677652cf967d6c0b5a6af7ba
+Merge: 8557feb b8be997
+Author: kathleen101 <81065967+kathleen101@users.noreply.github.com>
+Date:   Mon Jun 13 23:00:48 2022 -0700
+
+    Merge branch 'main' of https://github.com/dmarc3/to_do_app into Kathleen
+
+commit b8be9972e0a92243acb3b6494597f04c429b3d16
+Merge: 2c215da 0ddd3b1
+Author: dmarc3 <49968277+dmarc3@users.noreply.github.com>
+Date:   Mon Jun 13 21:56:07 2022 -0700
+
+    Merge pull request #5 from dmarc3/marcus
+    
+    Marcus
+
+commit 0ddd3b18a3bb15e037b64e717ba9283302aa1771
+Author: Marcus Bakke <marcusabakke@gmail.com>
+Date:   Mon Jun 13 21:54:43 2022 -0700
+
+    Add skeleton task unittest file
+
+commit 64058d60482e4c1a293aa06c987931c2dd7ed962
+Author: Marcus Bakke <marcusabakke@gmail.com>
+Date:   Mon Jun 13 21:09:17 2022 -0700
+
+    Pylint cleanup for Marcus' methods
+
+commit c874bedd418da59dd3812ae8ced2f22cb5e87fcc
+Author: Marcus Bakke <marcusabakke@gmail.com>
+Date:   Mon Jun 13 20:46:02 2022 -0700
+
+    Complete main unittests
+
+commit 2c215da2d3d7c296f5889b8ec2884574e722a105
+Merge: 01df88f 22ad404
+Author: dmarc3 <49968277+dmarc3@users.noreply.github.com>
+Date:   Sun Jun 12 22:24:56 2022 -0700
+
+    Merge pull request #4 from dmarc3/marcus
+    
+    Refactor task and integrate into main.
+
+commit 22ad4047ff78f349dbbff90f40855596ddcc732b
+Author: Marcus Bakke <marcusabakke@gmail.com>
+Date:   Sun Jun 12 22:09:20 2022 -0700
+
+    Refactor task to move necessary logic to main. Task now only manipulates the database or works with SQLalchemy
+
+commit 8557febf0deb983a2caf53d68653882a8bd3eb2e
+Merge: f31199a 01df88f
+Author: kathleen101 <81065967+kathleen101@users.noreply.github.com>
+Date:   Sat Jun 11 20:41:10 2022 -0700
+
+    Merge branch 'main' of https://github.com/dmarc3/to_do_app into Kathleen
+    
+     Conflicts:
+    	src/to_do_app/main_kathleen.py
+    	src/to_do_app/task.py
+    	src/to_do_app/validation.py
+
+commit 01df88fb38019f901e9905ff51f68eb84a871119
+Merge: 424b7b2 b0afa69
+Author: dmarc3 <49968277+dmarc3@users.noreply.github.com>
+Date:   Sat Jun 11 20:23:23 2022 -0700
+
+    Merge pull request #3 from dmarc3/marcus
+    
+    Marcus
+
+commit b0afa6962b47f3af3036a22a354a994e17169c6b
+Author: Marcus Bakke <marcusabakke@gmail.com>
+Date:   Sat Jun 11 20:21:40 2022 -0700
+
+    Integrate Kathleen's task / db setup into main and CLI
+
+commit f31199a80819db3314212c69e82acf91b5e2afd7
+Author: kathleen101 <81065967+kathleen101@users.noreply.github.com>
+Date:   Sat Jun 11 11:43:40 2022 -0700
+
+    Fixed error in add_task function.
+
+commit cac369756885371edc23a04bddcd009fa66a1fff
+Author: kathleen101 <81065967+kathleen101@users.noreply.github.com>
+Date:   Sat Jun 11 11:30:20 2022 -0700
+
+    Deleted delete function.
+
+commit 53204f0e3cf6f666fa251637fbefa20a63536494
+Author: kathleen101 <81065967+kathleen101@users.noreply.github.com>
+Date:   Sat Jun 11 10:38:00 2022 -0700
+
+    Removed model + updated tasks module.
+
+commit ad1892249dcc5a11125e76c85f75e384701cc37b
+Author: kathleen101 <81065967+kathleen101@users.noreply.github.com>
+Date:   Thu Jun 9 18:44:53 2022 -0700
+
+    Uploading all changes made since yesterday in case I want to return to original version.
+
+commit db9796d681c6daff57fc683ad2a784dfe5216d5b
+Author: kathleen101 <81065967+kathleen101@users.noreply.github.com>
+Date:   Wed Jun 8 20:50:19 2022 -0700
+
+    Cleaning and combining functions.
+
+commit 41fb66f756a50d6de0007484aa4c2eff4972ebbc
+Author: Marcus Bakke <marcusabakke@gmail.com>
+Date:   Wed Jun 8 19:21:25 2022 -0700
+
+    Update gitignore to ignore db files
+
+commit 8e89aa963f36cb21415ef7d3c796db845e827bed
+Author: kathleen101 <81065967+kathleen101@users.noreply.github.com>
+Date:   Wed Jun 8 19:19:39 2022 -0700
+
+    Cleaned up format and updated functions to fit new model.
+
+commit 78d485fff0f6cea2a03072f386585e266a7d5ec2
+Author: kathleen101 <81065967+kathleen101@users.noreply.github.com>
+Date:   Wed Jun 8 18:37:22 2022 -0700
+
+    Cleaning up format.
+
+commit 9b0468bdf22e2d656fba2f06bda27cb6dc7924f7
+Author: kathleen101 <81065967+kathleen101@users.noreply.github.com>
+Date:   Tue Jun 7 23:38:46 2022 -0700
+
+    Cleaning up format.
+
+commit ed506b46685754b209647b753ed6c963d577ca2a
+Author: Marcus Bakke <marcusabakke@gmail.com>
+Date:   Tue Jun 7 22:58:05 2022 -0700
+
+    Add unittests for CLI
+
+commit 4015bb032940106bff33211d31306794ebfada6f
+Author: Marcus Bakke <marcusabakke@gmail.com>
+Date:   Tue Jun 7 22:03:46 2022 -0700
+
+    Move root logger setup to logger.py
+
+commit dd644c4521298130d16ab1c0a77ffd92b3ab6e7f
+Author: Marcus Bakke <marcusabakke@gmail.com>
+Date:   Tue Jun 7 21:31:13 2022 -0700
+
+    Update global logging for log file and stream
+
+commit 6f65df56bcf075d2a530237d05ec8a1f186a9a8a
+Merge: 57e38b5 424b7b2
+Author: kathleen101 <81065967+kathleen101@users.noreply.github.com>
+Date:   Tue Jun 7 21:21:28 2022 -0700
+
+    Merge branch 'main' of https://github.com/dmarc3/to_do_app into Kathleen
+
+commit 424b7b2f2720da8a01f1d6f8cb3b9983a4a3e997
+Author: Marcus Bakke <marcusabakke@gmail.com>
+Date:   Mon Jun 6 22:15:20 2022 -0700
+
+    Pull in Kathleen branch. Includes skeleton of sqlalchemy model and task class
+
+commit 57e38b5e28d5d5d15378dbf54a52675a6feb01a9
+Author: kathleen101 <81065967+kathleen101@users.noreply.github.com>
+Date:   Mon Jun 6 21:22:53 2022 -0700
+
+    Updated to provide NULL data for adding + cleaned error mistakes.
+
+commit 6a23610b446c09b5e1b6d17d37999d06f5c5cf5e
+Merge: 2a30b6c 5022c19
+Author: dmarc3 <49968277+dmarc3@users.noreply.github.com>
+Date:   Mon Jun 6 21:15:45 2022 -0700
+
+    Merge pull request #2 from dmarc3/marcus
+    
+    Marcus
+
+commit f2c608a65999b933162ae5c1c1f9885a3cec724f
+Author: kathleen101 <81065967+kathleen101@users.noreply.github.com>
+Date:   Mon Jun 6 16:23:30 2022 -0700
+
+    Added commit line to save add statements.
+
+commit 232aeff58cbe74536645d8550349b9c757fc80b3
+Author: kathleen101 <81065967+kathleen101@users.noreply.github.com>
+Date:   Mon Jun 6 16:05:46 2022 -0700
+
+    Corrected errors.
+
+commit a8636fbf725b56d5ef8a9d9ab58f3ef037784240
+Author: kathleen101 <81065967+kathleen101@users.noreply.github.com>
+Date:   Mon Jun 6 15:28:03 2022 -0700
+
+    Corrected errors.
+
+commit 6650bc85637b497efe922207764b3a438edd76d8
+Author: kathleen101 <81065967+kathleen101@users.noreply.github.com>
+Date:   Mon Jun 6 14:51:01 2022 -0700
+
+    Cleaned up script to connect to database.
+
+commit e412fdbda5172386b021ac2b314bee765f9a84ba
+Author: kathleen101 <81065967+kathleen101@users.noreply.github.com>
+Date:   Mon Jun 6 11:09:02 2022 -0700
+
+    Updated format to metadata.
+
+commit 8cf47cc6f93db20f8f547fcc8bc3befc79339bad
+Author: kathleen101 <81065967+kathleen101@users.noreply.github.com>
+Date:   Mon Jun 6 11:02:09 2022 -0700
+
+    Updated format to metadata.
+
+commit 2bba811d42e8f07fc9df80a175493055a92f1502
+Author: kathleen101 <81065967+kathleen101@users.noreply.github.com>
+Date:   Mon Jun 6 09:08:20 2022 -0700
+
+    Updating to format.
+
+commit 5022c191b7d0a9f78c40963bdaa571505097bd61
+Author: Marcus Bakke <marcusabakke@gmail.com>
+Date:   Sun Jun 5 20:27:32 2022 -0700
+
+    Add skeleton unittest file for main
+
+commit 09b5610bf45444ef3d826d6c2fad3bf944d6a02a
+Author: kathleen101 <81065967+kathleen101@users.noreply.github.com>
+Date:   Sun Jun 5 12:37:41 2022 -0700
+
+    Creating model.
+
+commit 6e5ff32e871dcffdf250c3995815799ae3e14ad0
+Author: Marcus Bakke <marcusabakke@gmail.com>
+Date:   Sun Jun 5 11:49:57 2022 -0700
+
+    Complete initial input validation unittesting. Setup pylintrc and lint unittest file.
+
+commit 2a30b6cf7060e2b09983eb46aac0acd96b082e9d
+Merge: 9dd20d7 231ad5b
+Author: dmarc3 <49968277+dmarc3@users.noreply.github.com>
+Date:   Sat Jun 4 20:35:56 2022 -0700
+
+    Merge pull request #1 from dmarc3/marcus
+    
+    Marcus
+
+commit 231ad5b6dca818f16cab636c4c18699ce5a11527
+Author: Marcus Bakke <marcusabakke@gmail.com>
+Date:   Sat Jun 4 20:34:10 2022 -0700
+
+    Add validation module. Begin pytest setup
+
+commit 99492997f9a651c38dacb1bd5627ea84b45c80f0
+Author: Marcus Bakke <marcusabakke@gmail.com>
+Date:   Sat Jun 4 16:58:06 2022 -0700
+
+    Move CLI methods to command_line_interface.py. main.py is now just the main functions asked for in the assignment prompt
+
+commit 8d3026a1a6dad7bdffdfb20e6e07c71a2d4340a1
+Author: Marcus Bakke <marcusabakke@gmail.com>
+Date:   Fri Jun 3 22:55:21 2022 -0700
+
+    Setup base command line interface based off of pyscaffold 'skeleton.py'. Remove 'skeleton.py'
+
+commit 9dd20d7d67b0ec940fb8be981497445289f7fffc
+Author: Marcus Bakke <marcusabakke@gmail.com>
+Date:   Fri Jun 3 20:57:28 2022 -0700
+
+    Push initial pyscaffold setup
+
+commit 9f8e1e299db97a36ea40a143f9b03f75980db923
+Author: dmarc3 <49968277+dmarc3@users.noreply.github.com>
+Date:   Fri Jun 3 20:46:03 2022 -0700
+
+    Initial commit
