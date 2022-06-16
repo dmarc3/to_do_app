@@ -72,6 +72,16 @@ These will:
 
 Note that we did not finish the `BETWEEN` Flask API resource and therefore left that commented out.
 
+## Wishlist
+Would be nice to add the following but we ran out of time.
+1. Flush out `logging.debug` messages to have a more useful `--verbose` functionality.
+1. Add a `BETWEEN` Flask API resource which accepts input arguments within the URL
+1. Re-worked the `add_task` argument handling to allow addition of all inputs all at once...
+    - currently have to `add_task` -> `set_start_date` -> `set_due_date` -> etc. to define all parameters
+    - To cope, `add_task` currently assumes some defaults which you can override by calling the follow-up commands.
+    - Unfortuntaley, if you plan on chaining these commands, you need to know what `task_id` is going to be assigned via the `add_task`.
+    - Would be nice that, if the commands are chained, the code assumed all operations were for the same `task_id` and handled it for you.
+
 <!-- pyscaffold-notes -->
 
 ## Note
