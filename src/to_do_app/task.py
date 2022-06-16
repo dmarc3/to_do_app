@@ -30,7 +30,7 @@ class TaskCollection:
                    closed_date date,
                    PRIMARY KEY (task_id))"""))
 
-    def add_task(self, name: str, description: str, priority: str):
+    def get_max_task_id(self):
         try:
             max_query = self.db.execute(text("""SELECT
                                                 task_id
@@ -41,15 +41,18 @@ class TaskCollection:
             max_id = max_result[0] + 1
         except TypeError:
             max_id = 1
-        finally:
-            self.db.execute(text(f"""INSERT INTO tasks(task_id, name,
-                                  description, start_date, due_date, status,
-                                  priority) VALUES({max_id}, "{name}",
-                                  "{description}",
-                                  '{datetime.today().strftime('%Y-%m-%d')}',
-                                  '{(datetime.today()+timedelta(weeks=1)).strftime('%Y-%m-%d')}',
-                                  'ACTIVE', '{priority}')"""))
-            self.db.commit()
+        return max_id
+
+    def add_task(self, name: str, description: str, priority: str):
+        max_id = self.get_max_task_id()
+        self.db.execute(text(f"""INSERT INTO tasks(task_id, name,
+                                description, start_date, due_date, status,
+                                priority) VALUES({max_id}, "{name}",
+                                "{description}",
+                                '{datetime.today().strftime('%Y-%m-%d')}',
+                                '{(datetime.today()+timedelta(weeks=1)).strftime('%Y-%m-%d')}',
+                                'ACTIVE', '{priority}')"""))
+        self.db.commit()
 
     def sort_query(self, sort_by, direction='ASC'):
         query = self.db.execute(text(f"""SELECT*
