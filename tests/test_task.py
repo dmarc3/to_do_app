@@ -2,10 +2,10 @@
 import pytest
 from sqlalchemy import text
 from to_do_app.task import TaskCollection
+__author__ = "Kathleen Wong"
 
-
-@pytest.fixture()
-def tasks():
+@pytest.fixture(name="tasks")
+def fixture_tasks():
     """Initialize in-memory TaskCollection"""
     yield TaskCollection(path='sqlite://')
 
@@ -85,9 +85,11 @@ class TestTaskCollection:
         tasks.add_task(name='Test Task 3', description='Test description 3...', priority='9', )
         tasks.set_date(1, due_date='2022-06-01')
         tasks.set_date(2, due_date='2022-04-01')
-        tasks.update(1, name='Testing Update', description='testing',
-                     closed_date='2022-06-03', status='COMPLETED')
+        tasks.set_date(3, start_date='2022-06-01')
+        tasks.set_date(3, due_date='2022-06-03')
+        tasks.update(1, name='Testing Update', description='testing', status='COMPLETED')
         tasks.update(2, closed_date='2022-04-06', status='COMPLETED')
+        tasks.update(3, status='COMPLETED')
         closed_check = tasks.filter_closed_between_query('2022-04-05', '2022-04-07').fetchone().name
         expected_closed = tasks.db.execute((text("""SELECT t.name FROM tasks t
                                                    WHERE t.closed_date BETWEEN '2022-04-05' AND '2022-04-06'
