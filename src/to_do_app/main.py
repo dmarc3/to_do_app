@@ -5,6 +5,7 @@ from to_do_app.input_validation import get_valid_input
 __author__ = 'Marcus Bakke'
 _logger = logging.getLogger(__name__)
 
+
 def add_task(tasks, arguments: list) -> bool:
     """adds a new task to database"""
     if not arguments:
@@ -77,7 +78,7 @@ Please enter your choice: """).strip())
         inputs = {}
         func = tasks.filter_overdue_query
     # Execute query and print
-    print(func(**inputs))
+    print(tasks.print_query(func(**inputs)))
 
     return True
 

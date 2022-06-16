@@ -5,6 +5,7 @@ from to_do_app import main
 from to_do_app import task
 __author__ = "Marcus Bakke"
 
+
 def mock_with_args(inp, task_func, func, expected):
     """Mock function with arguments"""
     tasks = task.TaskCollection()
@@ -31,14 +32,16 @@ def mock_no_args(inp, task_func, func, expected):
 def mock_query_funcs(inp, task_func, func, expected):
     """Mock query functions"""
     tasks = task.TaskCollection()
-    func_mock = Mock()
-    with patch(task_func, func_mock):
-        input_mock = Mock()
-        input_mock.side_effect = inp
-        with patch('builtins.input', input_mock):
-            result = func(tasks, [])
-            assert result
-            assert func_mock.call_args.kwargs == expected
+    print_mock = Mock()
+    with patch('to_do_app.task.TaskCollection.print_query', print_mock):
+        func_mock = Mock()
+        with patch(task_func, func_mock):
+            input_mock = Mock()
+            input_mock.side_effect = inp
+            with patch('builtins.input', input_mock):
+                result = func(tasks, [])
+                assert result
+                assert func_mock.call_args.kwargs == expected
 
 
 def test_add_task_with_args():

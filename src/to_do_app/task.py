@@ -11,7 +11,7 @@ class TaskCollection:
 
     def __init__(self, path='sqlite:///task.db'):
         """ Initialize TaskCollection """
-        self.engine = create_engine(path, future=True)
+        self.engine = create_engine(path, future=True, connect_args={'check_same_thread': False})
         self.db = self.engine.connect()
         _logger.debug('Connection to %s established.', path)
         try:
@@ -48,7 +48,7 @@ class TaskCollection:
                                   "{description}",
                                   '{datetime.today().strftime('%Y-%m-%d')}',
                                   '{(datetime.today()+timedelta(weeks=1)).strftime('%Y-%m-%d')}',
-                                   'ACTIVE', '{priority}')"""))
+                                  'ACTIVE', '{priority}')"""))
             self.db.commit()
 
     def sort_query(self, sort_by, direction='ASC'):
@@ -56,29 +56,30 @@ class TaskCollection:
                                          FROM tasks t
                                          ORDER BY t.{sort_by} {direction}
                                      """))
-        return self.print_query(query)
+        return query
 
     def sort_open_query(self, sort_by: str, direction='ASC'):
         query = self.db.execute(text(f"""SELECT*
                                          FROM tasks t
                                          WHERE t.status='ACTIVE'
                                          ORDER BY t.{sort_by} {direction}"""))
-        return self.print_query(query)
+        return query
 
     def filter_closed_between_query(self, start, end):
         query = self.db.execute(text(f"""SELECT*
                                          FROM tasks t
                                          WHERE (t.status='COMPLETED' OR t.status='DELETED')
                                          AND t.closed_date BETWEEN '{start}' AND '{end}'"""))
-        return self.print_query(query)
+        return query
 
     def filter_overdue_query(self, filter_by='due_date'):
         query = self.db.execute(text(f"""SELECT*
                                          FROM tasks t
-                                         WHERE t.{filter_by}<DATE()"""))
-        return self.print_query(query)
+                                         WHERE t.status='ACTIVE'
+                                         AND t.{filter_by}<DATE()"""))
+        return query
 
-    def print_query(self, query: list):
+    def print_query(self, query):
         # Build header
         header = list(query.keys())
         header = [head.replace('_', ' ').upper() for head in header]
@@ -115,8 +116,8 @@ class TaskCollection:
                 self.db.execute(text(f"""UPDATE tasks
                                      SET {key}='{value}'
                                      WHERE task_id={task_id}"""))
-            self.db.commit()
-            break
+                self.db.commit()
+                break
 
     def update(self, task_id: int, name=None, description=None, status=None, closed_date=None):
         if name:
