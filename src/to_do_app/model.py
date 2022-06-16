@@ -4,6 +4,7 @@ from flask_restful import Resource, Api, request
 from sqlalchemy import create_engine
 # from to_do_app.input_validation import get_valid_input
 from to_do_app import task
+__author__ = "Both"
 
 task_collection = task.TaskCollection()
 

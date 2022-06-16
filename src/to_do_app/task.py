@@ -1,8 +1,7 @@
+""" SQLAlchemy Interface to sqlite Database """
 import logging
 from datetime import datetime, timedelta
 from sqlalchemy import create_engine, text, exc
-# import to_do_app.validation as validation
-
 __author__ = 'Kathleen Wong'
 _logger = logging.getLogger(__name__)
 
@@ -31,6 +30,7 @@ class TaskCollection:
                    PRIMARY KEY (task_id))"""))
 
     def get_max_task_id(self):
+        """Method to calculate next task_id"""
         try:
             max_query = self.db.execute(text("""SELECT
                                                 task_id
@@ -44,6 +44,7 @@ class TaskCollection:
         return max_id
 
     def add_task(self, name: str, description: str, priority: str):
+        """Method to add task to database"""
         max_id = self.get_max_task_id()
         self.db.execute(text(f"""INSERT INTO tasks(task_id, name,
                                 description, start_date, due_date, status,
@@ -55,6 +56,7 @@ class TaskCollection:
         self.db.commit()
 
     def sort_query(self, sort_by, direction='ASC'):
+        """Method to perform a sort query"""
         query = self.db.execute(text(f"""SELECT*
                                          FROM tasks t
                                          ORDER BY t.{sort_by} {direction}
@@ -62,6 +64,7 @@ class TaskCollection:
         return query
 
     def sort_open_query(self, sort_by: str, direction='ASC'):
+        """Method to perform a sort query on all open tasks"""
         query = self.db.execute(text(f"""SELECT*
                                          FROM tasks t
                                          WHERE t.status='ACTIVE'
@@ -69,6 +72,7 @@ class TaskCollection:
         return query
 
     def filter_closed_between_query(self, start, end):
+        """Method to perform a filter query between dates on closed tasks"""
         query = self.db.execute(text(f"""SELECT*
                                          FROM tasks t
                                          WHERE (t.status='COMPLETED' OR t.status='DELETED')
@@ -76,6 +80,7 @@ class TaskCollection:
         return query
 
     def filter_overdue_query(self, filter_by='due_date'):
+        """Method to perform filter query on overdue tasks"""
         query = self.db.execute(text(f"""SELECT*
                                          FROM tasks t
                                          WHERE t.status='ACTIVE'
@@ -83,6 +88,7 @@ class TaskCollection:
         return query
 
     def print_query(self, query):
+        """Method to build formatted string for query"""
         # Build header
         header = list(query.keys())
         header = [head.replace('_', ' ').upper() for head in header]
@@ -109,6 +115,7 @@ class TaskCollection:
         return out
 
     def set_date(self, task_id: int, start_date=None, due_date=None, closed_date=None):
+        """Method to set dates in database"""
         dates = dict(
             start_date=start_date,
             due_date=due_date,
@@ -123,6 +130,7 @@ class TaskCollection:
                 break
 
     def update(self, task_id: int, name=None, description=None, status=None, closed_date=None):
+        """Method to update task attributes"""
         if name:
             self.db.execute(text(f"""UPDATE tasks
                                      SET name='{name}'
@@ -144,4 +152,3 @@ class TaskCollection:
                                         SET closed_date='{closed_date}'
                                         WHERE task_id={task_id}"""))
             self.db.commit()
-

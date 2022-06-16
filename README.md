@@ -8,7 +8,7 @@ Final assignment for University of Washington Python 320. Homework instructions 
     - `pyscaffold`, command line interface, and logging setup (`command_line_interface.py` and `logging.py`)
     - Input validation (`input_validation.py`)
     - Main function and integration (`main.py`)
-    - Unittests for `command_line_interface.py`, `main.py`, and `input_validation.py`
+    - Unittests for `command_line_interface.py`, `main.py`,  `input_validation.py` and `model.py`
 - Kathleen Wong
     - `SQLAlchemy` database model and interactions (`task.py`)
     - API design and setup (`model.py`)
@@ -52,6 +52,25 @@ For a linux shell, execute the `bat` file as a script:
 ```shell
 source populate_database.bat
 ```
+
+## Curl Interface
+Once the API is running via executing `model.py`, the user may interact with the API using standard `curl` commands. Below are few examples:
+
+```
+curl http://127.0.0.1:5002/tasks
+curl http://127.0.0.1:5002/priority
+curl http://127.0.0.1:5002/due_date
+curl http://127.0.0.1:5002/overdue
+curl http://127.0.0.1:5002/tasks -H "Content-Type: application/json" -d '{"name": "Task 1", "description": "Task Description 1", "start_date": "2022-06-15", "due_date": "2022-07-01", "priority": "5", "status": "ACTIVE"}'
+```
+These will:
+1. Execute a `GET` request on the raw database sorted by `task_id`
+1. Execute a `GET` request on the raw database sorted by `priority`
+1. Execute a `GET` request on all open tasks sorted by `due_date`
+1. Execute a `GET` request on all overdue tasks
+1. Execute a `POST` request give the payload as a dictionary
+
+Note that we did not finish the `BETWEEN` Flask API resource and therefore left that commented out.
 
 <!-- pyscaffold-notes -->
 
