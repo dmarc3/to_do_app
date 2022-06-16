@@ -1,9 +1,17 @@
 from flask import Flask, jsonify
-from flask_restful import Resource, Api
+from flask_restful import Resource, Api, reqparse
 from sqlalchemy import create_engine
 from to_do_app.input_validation import get_valid_input
 from to_do_app import task
 
+
+# Define parser and request args
+parser = reqparse.RequestParser()
+parser.add_argument('name', type=str)
+parser.add_argument('description', type=str)
+parser.add_argument('start_date', type=str)
+parser.add_argument('due_date', type=str)
+parser.add_argument('priority', type=str)
 
 class Task(Resource):
     def get(self):
@@ -45,6 +53,11 @@ class Overdue(Resource):
         result = {'data': [dict(zip(tuple(query.keys()), i)) for i in query]}
         return jsonify(result)
 
+class AddTask(Resource):
+    def post(self):
+        args = parser.parse_args()
+        return jsonify(**args)
+
 def run_app(path="sqlite:///task.db"):
     db = create_engine(path)
     app = Flask(__name__)
@@ -64,6 +77,7 @@ def run_app(path="sqlite:///task.db"):
     # )
     # api.add_resource(Between, f'/between{dates["start_date"]}&{dates["due_date"]}')  # task 4-between two dates
     api.add_resource(Overdue, '/overdue')  # task 5-overdue
+    api.add_resource(AddTask, )
     return app, db
 
 def close_app(db):
