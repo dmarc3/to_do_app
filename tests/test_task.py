@@ -49,7 +49,7 @@ class TestTaskCollection:
     def test_set_start_date(self, tasks):
         """test set_due_date method"""
         tasks.add_task(name='Test Task 1', description='Test description 1...', priority='4', )
-        tasks.set_date(1, start_date='2022-05-01')
+        tasks.set_date(1, start_date='2022-05-01', due_date='2022-05-10', closed_date='2022-05-08')
         expected = tasks.db.execute((text("""SELECT t.start_date FROM tasks t
                                                      WHERE t.task_id=1""")))
         expected_result = expected.fetchone().start_date
@@ -59,7 +59,7 @@ class TestTaskCollection:
         """test set_Start_date method"""
         tasks.add_task(name='Test Task 1', description='Test description 1...', priority='4', )
         tasks.add_task(name='Test Task 2', description='Test description 2...', priority='8', )
-        tasks.set_date(1, due_date='2022-06-01')
+        tasks.set_date(1, start_date='2022-05-28', due_date='2022-06-01', closed_date='2022-06-03')
         tasks.set_date(1, due_date='2022-04-01')
         expected = tasks.db.execute((text("""SELECT t.due_date FROM tasks t
                                              WHERE t.task_id=1""")))
@@ -82,11 +82,13 @@ class TestTaskCollection:
         """test mark_complete method"""
         tasks.add_task(name='Test Task 1', description='Test description 1...', priority='4', )
         tasks.add_task(name='Test Task 2', description='Test description 2...', priority='8', )
+        tasks.add_task(name='Test Task 3', description='Test description 3...', priority='9', )
         tasks.set_date(1, due_date='2022-06-01')
-        tasks.set_date(1, due_date='2022-04-01')
+        tasks.set_date(2, due_date='2022-04-01')
         tasks.update(1, name='Testing Update', description='testing',
                      closed_date='2022-06-03', status='COMPLETED')
         tasks.update(2, closed_date='2022-04-06', status='COMPLETED')
+        tasks.update(3, status='COMPLETED')
         closed_check = tasks.filter_closed_between_query('2022-04-05', '2022-04-07').fetchone().name
         expected_closed = tasks.db.execute((text("""SELECT t.name FROM tasks t
                                                    WHERE t.closed_date BETWEEN '2022-04-05' AND '2022-04-06'
@@ -94,3 +96,5 @@ class TestTaskCollection:
         assert expected_closed, 'Testing Update'
         assert closed_check, 'Testing Update'
         assert closed_check, expected_closed
+        print_test = tasks.print_query(tasks.sort_query('task_id'))
+        assert print_test, True
